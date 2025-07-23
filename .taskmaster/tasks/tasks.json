@@ -1,0 +1,813 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Configuración del Entorno de Desarrollo",
+        "description": "Configurar el entorno de desarrollo con Python, Streamlit, PostgreSQL, SQLAlchemy y Alembic para el sistema de seguimiento de entrenamiento y nutrición.",
+        "details": "1. Crear un repositorio Git para el proyecto\n2. Configurar un entorno virtual de Python\n3. Instalar dependencias principales:\n   - streamlit==1.28.0\n   - psycopg2-binary==2.9.9\n   - sqlalchemy==2.0.23\n   - alembic==1.12.1\n   - pandas==2.1.1\n   - plotly==5.18.0\n   - python-dotenv==1.0.0\n4. Crear estructura de directorios:\n   ```\n   /app\n     /models\n     /views\n     /controllers\n     /utils\n     /migrations\n     /static\n     /tests\n   ```\n5. Configurar archivo .env para variables de entorno\n6. Configurar PostgreSQL local o en la nube\n7. Inicializar Alembic para migraciones\n8. Crear archivo main.py para la aplicación Streamlit\n9. Configurar archivo README.md con instrucciones de instalación",
+        "testStrategy": "1. Verificar que todas las dependencias se instalan correctamente\n2. Comprobar la conexión a la base de datos PostgreSQL\n3. Verificar que Alembic está correctamente configurado\n4. Ejecutar la aplicación Streamlit localmente para confirmar que funciona",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configuración del repositorio y entorno virtual",
+            "description": "Crear y configurar el repositorio Git para el proyecto y establecer un entorno virtual de Python aislado",
+            "dependencies": [],
+            "details": "1. Crear un nuevo repositorio en GitHub/GitLab\n2. Inicializar Git localmente con `git init`\n3. Configurar .gitignore para Python (incluir venv/, .env, __pycache__/, etc.)\n4. Crear un entorno virtual con `python -m venv venv`\n5. Activar el entorno virtual\n6. Configurar README.md con instrucciones básicas del proyecto\n7. Realizar commit inicial",
+            "status": "in-progress",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Instalación de dependencias",
+            "description": "Instalar y configurar todas las bibliotecas y paquetes necesarios para el proyecto",
+            "dependencies": [],
+            "details": "1. Crear requirements.txt con las dependencias especificadas:\n   - streamlit==1.28.0\n   - psycopg2-binary==2.9.9\n   - sqlalchemy==2.0.23\n   - alembic==1.12.1\n   - pandas==2.1.1\n   - plotly==5.18.0\n   - python-dotenv==1.0.0\n2. Instalar dependencias con `pip install -r requirements.txt`\n3. Verificar instalación correcta\n4. Crear setup.py para configuración del paquete (opcional)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Estructura de directorios",
+            "description": "Crear la estructura de carpetas y archivos base para el proyecto siguiendo un patrón MVC",
+            "dependencies": [],
+            "details": "1. Crear la estructura de directorios según lo especificado:\n   ```\n   /app\n     /models\n     /views\n     /controllers\n     /utils\n     /migrations\n     /static\n     /tests\n   ```\n2. Crear archivos __init__.py en cada directorio\n3. Crear archivo main.py en la raíz\n4. Configurar archivos base en cada carpeta (ej: base_model.py, app.py)\n5. Configurar estructura para tests unitarios",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Configuración de base de datos y variables de entorno",
+            "description": "Configurar la conexión a PostgreSQL y establecer las variables de entorno necesarias",
+            "dependencies": [],
+            "details": "1. Crear archivo .env para variables de entorno con:\n   - DATABASE_URL\n   - SECRET_KEY\n   - DEBUG\n   - Otras configuraciones necesarias\n2. Crear archivo database.py en utils para manejar la conexión\n3. Implementar función de conexión a PostgreSQL usando SQLAlchemy\n4. Crear script para verificar la conexión\n5. Configurar Base de SQLAlchemy para los modelos\n6. Documentar parámetros de conexión",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Inicialización de Alembic y documentación",
+            "description": "Configurar Alembic para migraciones de base de datos y documentar el entorno de desarrollo",
+            "dependencies": [],
+            "details": "1. Inicializar Alembic con `alembic init migrations`\n2. Configurar alembic.ini para usar la URL de la base de datos\n3. Modificar env.py para importar los modelos\n4. Crear migración inicial con `alembic revision --autogenerate -m \"Initial migration\"`\n5. Documentar el proceso de configuración en README.md\n6. Crear guía de instalación para nuevos desarrolladores\n7. Documentar comandos comunes para gestionar el entorno",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implementación del Sistema de Autenticación de Usuarios",
+        "description": "Desarrollar el sistema de autenticación y gestión de usuarios para permitir registro, inicio de sesión y gestión de perfiles.",
+        "details": "1. Crear modelo de Usuario en SQLAlchemy:\n   ```python\n   class User(Base):\n       __tablename__ = 'users'\n       id = Column(Integer, primary_key=True)\n       username = Column(String, unique=True, nullable=False)\n       email = Column(String, unique=True, nullable=False)\n       password_hash = Column(String, nullable=False)\n       created_at = Column(DateTime, default=datetime.utcnow)\n       updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)\n       # Campos adicionales: altura, peso_inicial, objetivo, etc.\n   ```\n2. Implementar funciones de hash y verificación de contraseñas usando bcrypt\n3. Crear vistas de Streamlit para:\n   - Registro de usuario\n   - Inicio de sesión\n   - Recuperación de contraseña\n   - Edición de perfil\n4. Implementar sistema de sesiones en Streamlit usando st.session_state\n5. Crear migración para la tabla de usuarios\n6. Implementar validaciones de formularios\n7. Añadir encriptación para datos sensibles según GDPR/LGPD",
+        "testStrategy": "1. Probar registro con datos válidos e inválidos\n2. Verificar inicio de sesión con credenciales correctas e incorrectas\n3. Comprobar que las contraseñas se almacenan hasheadas, no en texto plano\n4. Verificar que la sesión persiste correctamente\n5. Probar la edición de perfil\n6. Verificar que los datos sensibles están encriptados",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación del modelo de usuario",
+            "description": "Implementar el modelo de usuario en SQLAlchemy con todos los campos necesarios y configurar las migraciones correspondientes.",
+            "dependencies": [],
+            "details": "1. Definir la clase User con los campos requeridos (username, email, password_hash, etc.)\n2. Configurar relaciones con otras tablas (si aplica)\n3. Implementar métodos para validación de datos\n4. Crear migración inicial con Alembic\n5. Implementar métodos para CRUD de usuarios",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implementación de hash y verificación de contraseñas",
+            "description": "Desarrollar funciones seguras para el hash y verificación de contraseñas utilizando bibliotecas criptográficas.",
+            "dependencies": [],
+            "details": "1. Investigar y seleccionar una biblioteca segura para hash (bcrypt, Argon2, etc.)\n2. Implementar función para generar hash de contraseñas\n3. Implementar función para verificar contraseñas\n4. Crear pruebas unitarias para ambas funciones\n5. Integrar las funciones con el modelo de usuario",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Desarrollo de la vista de registro",
+            "description": "Crear la interfaz de usuario para el registro de nuevos usuarios con validaciones y feedback apropiado.",
+            "dependencies": [],
+            "details": "1. Diseñar formulario de registro con Streamlit\n2. Implementar validaciones de campos (email, contraseña segura, etc.)\n3. Integrar con las funciones de hash de contraseñas\n4. Mostrar mensajes de error apropiados\n5. Implementar redirección tras registro exitoso",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Desarrollo de la vista de inicio de sesión",
+            "description": "Crear la interfaz de usuario para el inicio de sesión con validación de credenciales y manejo de errores.",
+            "dependencies": [],
+            "details": "1. Diseñar formulario de inicio de sesión con Streamlit\n2. Implementar verificación de credenciales\n3. Integrar con las funciones de verificación de contraseñas\n4. Mostrar mensajes de error apropiados\n5. Implementar redirección tras inicio de sesión exitoso",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implementación del sistema de sesiones",
+            "description": "Desarrollar un sistema para gestionar sesiones de usuario en Streamlit, permitiendo mantener el estado de autenticación.",
+            "dependencies": [],
+            "details": "1. Investigar opciones para manejo de sesiones en Streamlit\n2. Implementar funciones para crear y validar tokens de sesión\n3. Desarrollar mecanismo para almacenar información de sesión\n4. Crear funciones para verificar si un usuario está autenticado\n5. Implementar cierre de sesión seguro",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Desarrollo de la vista de edición de perfil",
+            "description": "Crear la interfaz de usuario para que los usuarios puedan editar su información de perfil.",
+            "dependencies": [],
+            "details": "1. Diseñar formulario de edición de perfil con Streamlit\n2. Cargar datos actuales del usuario en el formulario\n3. Implementar validaciones de campos\n4. Desarrollar lógica para actualizar información en la base de datos\n5. Mostrar confirmación de cambios realizados",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Desarrollo del Módulo de Entrenamiento (Características P0)",
+        "description": "Implementar las características esenciales del módulo de entrenamiento: registro de entrenamientos, biblioteca de ejercicios, seguimiento de series/repeticiones/pesos y visualización de progreso.",
+        "details": "1. Crear modelos en SQLAlchemy:\n   ```python\n   class Exercise(Base):\n       __tablename__ = 'exercises'\n       id = Column(Integer, primary_key=True)\n       name = Column(String, nullable=False)\n       description = Column(Text)\n       muscle_group = Column(String)\n       # Otros campos relevantes\n\n   class Workout(Base):\n       __tablename__ = 'workouts'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       name = Column(String, nullable=False)\n       description = Column(Text)\n       created_at = Column(DateTime, default=datetime.utcnow)\n\n   class WorkoutExercise(Base):\n       __tablename__ = 'workout_exercises'\n       id = Column(Integer, primary_key=True)\n       workout_id = Column(Integer, ForeignKey('workouts.id'))\n       exercise_id = Column(Integer, ForeignKey('exercises.id'))\n       order = Column(Integer)\n\n   class WorkoutLog(Base):\n       __tablename__ = 'workout_logs'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       workout_id = Column(Integer, ForeignKey('workouts.id'))\n       date = Column(Date, nullable=False)\n       notes = Column(Text)\n\n   class ExerciseSet(Base):\n       __tablename__ = 'exercise_sets'\n       id = Column(Integer, primary_key=True)\n       workout_log_id = Column(Integer, ForeignKey('workout_logs.id'))\n       exercise_id = Column(Integer, ForeignKey('exercises.id'))\n       set_number = Column(Integer)\n       weight = Column(Float)\n       reps = Column(Integer)\n       notes = Column(Text)\n   ```\n2. Crear migraciones para estas tablas\n3. Poblar la base de datos con ejercicios predefinidos\n4. Implementar vistas de Streamlit para:\n   - Visualización de biblioteca de ejercicios\n   - Creación y edición de entrenamientos\n   - Registro de sesiones de entrenamiento\n   - Seguimiento de series, repeticiones y pesos\n5. Desarrollar gráficos de progreso usando Plotly para visualizar:\n   - Progresión de pesos por ejercicio\n   - Volumen total por sesión\n   - Frecuencia de entrenamiento",
+        "testStrategy": "1. Verificar que los ejercicios predefinidos se cargan correctamente\n2. Probar la creación de entrenamientos personalizados\n3. Comprobar el registro de series, repeticiones y pesos\n4. Verificar que los gráficos muestran correctamente el progreso\n5. Probar la funcionalidad con diferentes tipos de ejercicios\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación de modelos de datos para el módulo de entrenamiento",
+            "description": "Diseñar e implementar los modelos SQLAlchemy necesarios para el módulo de entrenamiento, incluyendo Exercise, Workout, WorkoutExercise, y WorkoutSession.",
+            "dependencies": [],
+            "details": "Implementar los siguientes modelos:\n1. Exercise (ejercicios): id, name, description, muscle_group, equipment, difficulty, instructions, image_url\n2. Workout (plantillas de entrenamiento): id, user_id, name, description, is_template\n3. WorkoutExercise (ejercicios en un entrenamiento): id, workout_id, exercise_id, sets, reps, rest_time, order\n4. WorkoutSession (sesión de entrenamiento realizada): id, workout_id, user_id, date, duration, notes\n5. ExerciseSet (series realizadas): id, workout_session_id, exercise_id, set_number, reps, weight, rpe",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Migraciones de base de datos para el módulo de entrenamiento",
+            "description": "Crear y ejecutar las migraciones de Alembic para generar las tablas necesarias en la base de datos PostgreSQL.",
+            "dependencies": [],
+            "details": "1. Generar el script de migración con Alembic para crear las tablas: exercises, workouts, workout_exercises, workout_sessions, y exercise_sets\n2. Incluir índices apropiados para optimizar consultas frecuentes\n3. Establecer restricciones de clave foránea para mantener la integridad referencial\n4. Ejecutar la migración y verificar que las tablas se crean correctamente\n5. Crear script de rollback en caso de problemas",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Población de ejercicios predefinidos",
+            "description": "Crear un script para poblar la base de datos con un conjunto inicial de ejercicios predefinidos organizados por grupos musculares.",
+            "dependencies": [],
+            "details": "1. Crear un archivo JSON o CSV con datos de ejercicios comunes (mínimo 50 ejercicios)\n2. Incluir información detallada: nombre, descripción, grupo muscular, equipamiento necesario, nivel de dificultad e instrucciones\n3. Desarrollar un script Python que lea este archivo y lo inserte en la base de datos\n4. Agregar URLs de imágenes ilustrativas para cada ejercicio\n5. Organizar los ejercicios por categorías: fuerza, cardio, flexibilidad, etc.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Desarrollo de la vista de biblioteca de ejercicios",
+            "description": "Implementar la interfaz de usuario en Streamlit para visualizar, filtrar y buscar ejercicios en la biblioteca.",
+            "dependencies": [],
+            "details": "1. Crear una página principal de biblioteca de ejercicios\n2. Implementar filtros por grupo muscular, equipamiento y dificultad\n3. Añadir función de búsqueda por nombre o palabra clave\n4. Mostrar detalles de cada ejercicio con imágenes y descripciones\n5. Permitir la visualización de ejercicios en formato de lista o tarjetas\n6. Implementar paginación para navegar por grandes conjuntos de ejercicios",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implementación de la creación/edición de entrenamientos",
+            "description": "Desarrollar la interfaz y lógica para que los usuarios puedan crear y editar sus propios entrenamientos personalizados.",
+            "dependencies": [],
+            "details": "1. Crear formulario para añadir un nuevo entrenamiento (nombre, descripción)\n2. Implementar funcionalidad para añadir ejercicios al entrenamiento desde la biblioteca\n3. Permitir especificar series, repeticiones y tiempo de descanso para cada ejercicio\n4. Implementar función de reordenamiento de ejercicios mediante drag-and-drop\n5. Añadir opción para guardar entrenamientos como plantillas\n6. Desarrollar vista de edición para modificar entrenamientos existentes",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Desarrollo del registro de sesiones de entrenamiento",
+            "description": "Implementar la funcionalidad para que los usuarios registren sus sesiones de entrenamiento completadas, incluyendo series, repeticiones y pesos.",
+            "dependencies": [],
+            "details": "1. Crear interfaz para iniciar una nueva sesión basada en un entrenamiento existente\n2. Desarrollar formulario dinámico para registrar series, repeticiones y pesos para cada ejercicio\n3. Implementar cronómetro/temporizador para controlar tiempos de descanso\n4. Añadir campo para notas y valoración de la sesión\n5. Permitir marcar ejercicios como completados durante la sesión\n6. Implementar guardado automático para evitar pérdida de datos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implementación de gráficos de progreso",
+            "description": "Desarrollar visualizaciones gráficas que muestren el progreso del usuario en diferentes ejercicios y entrenamientos a lo largo del tiempo.",
+            "dependencies": [],
+            "details": "1. Crear gráficos de línea para mostrar la progresión de peso/repeticiones por ejercicio\n2. Implementar gráficos de barras para comparar volumen total por grupo muscular\n3. Desarrollar visualización de frecuencia de entrenamiento (calendario de calor)\n4. Añadir gráficos de distribución de tiempo dedicado a diferentes grupos musculares\n5. Implementar filtros por período de tiempo (semana, mes, año)\n6. Permitir exportar datos y gráficos en formato PNG o CSV",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implementación del Módulo de Métricas Corporales (Características P0)",
+        "description": "Desarrollar las características esenciales del módulo de métricas corporales: registro de peso y altura, cálculo de IMC y gráficos de progreso.",
+        "details": "1. Crear modelo para métricas corporales en SQLAlchemy:\n   ```python\n   class BodyMetric(Base):\n       __tablename__ = 'body_metrics'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       date = Column(Date, nullable=False)\n       weight = Column(Float)  # en kg\n       height = Column(Float)  # en cm\n       # Campos adicionales para fase posterior\n       # body_fat = Column(Float)\n       # muscle_mass = Column(Float)\n       # etc.\n       \n       @property\n       def bmi(self):\n           \"\"\"Calcula el Índice de Masa Corporal\"\"\"\n           if self.height and self.weight:\n               return self.weight / ((self.height/100) ** 2)\n           return None\n   ```\n2. Crear migración para la tabla de métricas corporales\n3. Implementar vistas de Streamlit para:\n   - Registro de peso y altura\n   - Visualización de IMC actual\n   - Historial de mediciones\n4. Desarrollar gráficos de progreso usando Plotly para:\n   - Evolución del peso a lo largo del tiempo\n   - Evolución del IMC\n5. Implementar cálculos automáticos de IMC y categorización (bajo peso, normal, sobrepeso, etc.)\n6. Añadir validaciones para datos ingresados",
+        "testStrategy": "1. Verificar el correcto cálculo del IMC\n2. Probar el registro de múltiples mediciones\n3. Comprobar que los gráficos muestran correctamente la evolución\n4. Verificar la categorización del IMC\n5. Probar con diferentes unidades de medida\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación del modelo de métricas corporales",
+            "description": "Implementar el modelo BodyMetric en SQLAlchemy con todos los campos necesarios para almacenar peso, altura y fecha de registro.",
+            "dependencies": [],
+            "details": "Desarrollar el modelo BodyMetric con los siguientes campos:\n- id (clave primaria)\n- user_id (clave foránea a users)\n- date (fecha de registro)\n- weight (peso en kg)\n- height (altura en cm)\n\nImplementar también métodos para:\n- Calcular el IMC (peso/altura²)\n- Categorizar el IMC según rangos estándar (bajo peso, normal, sobrepeso, etc.)\n- Validar datos de entrada",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Migraciones de base de datos para métricas corporales",
+            "description": "Crear y ejecutar las migraciones de Alembic para la tabla body_metrics y sus relaciones.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Tareas específicas:\n- Generar el script de migración con Alembic\n- Implementar la creación de la tabla body_metrics\n- Configurar las restricciones de clave foránea con la tabla users\n- Establecer índices apropiados para optimizar consultas por usuario y fecha\n- Documentar el proceso de migración\n- Crear script de reversión (downgrade)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Desarrollo de la vista de registro de peso y altura",
+            "description": "Implementar la interfaz de usuario en Streamlit para permitir a los usuarios registrar su peso y altura.",
+            "dependencies": [
+              "4.1",
+              "4.2"
+            ],
+            "details": "Funcionalidades a implementar:\n- Formulario para ingresar peso y altura\n- Selector de fecha (con valor predeterminado en fecha actual)\n- Validación de datos en tiempo real\n- Opción para seleccionar unidades (kg/lb para peso, cm/ft para altura)\n- Botón para guardar los datos\n- Confirmación visual del registro exitoso\n- Opción para editar/eliminar registros anteriores",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implementación del cálculo y visualización de IMC",
+            "description": "Desarrollar la lógica para calcular el IMC y mostrar su interpretación al usuario.",
+            "dependencies": [
+              "4.1",
+              "4.3"
+            ],
+            "details": "Implementar:\n- Función de cálculo de IMC (peso[kg] / (altura[m])²)\n- Categorización según rangos estándar de la OMS:\n  * < 18.5: Bajo peso\n  * 18.5-24.9: Normal\n  * 25.0-29.9: Sobrepeso\n  * 30.0-34.9: Obesidad grado I\n  * 35.0-39.9: Obesidad grado II\n  * ≥ 40.0: Obesidad grado III\n- Visualización del IMC actual con indicador visual (gauge)\n- Mostrar recomendaciones básicas según la categoría\n- Permitir cambio de unidades para visualización",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Desarrollo de gráficos de progreso",
+            "description": "Implementar visualizaciones gráficas para mostrar la evolución del peso, altura e IMC a lo largo del tiempo.",
+            "dependencies": [
+              "4.1",
+              "4.3",
+              "4.4"
+            ],
+            "details": "Crear los siguientes gráficos usando Plotly:\n- Gráfico de línea para evolución del peso en el tiempo\n- Gráfico de línea para evolución del IMC en el tiempo\n- Opción para seleccionar rango de fechas a visualizar\n- Marcadores para destacar valores máximos y mínimos\n- Líneas de referencia para rangos de IMC saludable\n- Funcionalidad para exportar datos en formato CSV\n- Opciones para personalizar la visualización (colores, escala, etc.)",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Desarrollo del Módulo de Nutrición (Características P0)",
+        "description": "Implementar las características esenciales del módulo de nutrición: registro de comidas diarias, base de datos de alimentos, cálculo de calorías y seguimiento de macronutrientes.",
+        "details": "1. Crear modelos en SQLAlchemy:\n   ```python\n   class Food(Base):\n       __tablename__ = 'foods'\n       id = Column(Integer, primary_key=True)\n       name = Column(String, nullable=False)\n       calories = Column(Float)  # por 100g\n       protein = Column(Float)  # en g\n       carbs = Column(Float)    # en g\n       fat = Column(Float)      # en g\n       fiber = Column(Float)    # en g\n       serving_size = Column(Float)  # en g\n       serving_unit = Column(String)\n\n   class Meal(Base):\n       __tablename__ = 'meals'\n       id = Column(Integer, primary_key=True)\n       name = Column(String, nullable=False)  # Desayuno, Almuerzo, etc.\n\n   class MealLog(Base):\n       __tablename__ = 'meal_logs'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       date = Column(Date, nullable=False)\n       meal_id = Column(Integer, ForeignKey('meals.id'))\n       notes = Column(Text)\n\n   class MealFood(Base):\n       __tablename__ = 'meal_foods'\n       id = Column(Integer, primary_key=True)\n       meal_log_id = Column(Integer, ForeignKey('meal_logs.id'))\n       food_id = Column(Integer, ForeignKey('foods.id'))\n       quantity = Column(Float)  # en g o unidades\n       \n       @property\n       def calories(self):\n           food = Food.query.get(self.food_id)\n           return (food.calories * self.quantity) / food.serving_size\n       \n       # Propiedades similares para proteínas, carbohidratos y grasas\n   ```\n2. Crear migraciones para estas tablas\n3. Poblar la base de datos con alimentos comunes y su información nutricional\n4. Implementar vistas de Streamlit para:\n   - Búsqueda de alimentos\n   - Registro de comidas diarias\n   - Visualización de ingesta calórica\n   - Seguimiento de macronutrientes\n5. Desarrollar gráficos para visualizar:\n   - Distribución de macronutrientes\n   - Calorías consumidas vs. objetivo\n   - Tendencias a lo largo del tiempo\n6. Implementar cálculo automático de necesidades calóricas basado en datos del usuario",
+        "testStrategy": "1. Verificar que la base de datos de alimentos se carga correctamente\n2. Probar el registro de comidas con diferentes alimentos\n3. Comprobar el cálculo correcto de calorías y macronutrientes\n4. Verificar que los gráficos muestran correctamente la distribución\n5. Probar con diferentes objetivos calóricos\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación de modelos de datos para el módulo de nutrición",
+            "description": "Desarrollar los modelos SQLAlchemy para alimentos, comidas, registros de comidas y relaciones entre ellos",
+            "dependencies": [],
+            "details": "Implementar los siguientes modelos:\n- Food: información nutricional de alimentos\n- Meal: estructura de comidas (desayuno, almuerzo, etc.)\n- MealEntry: registro de comidas específicas\n- FoodPortion: relación entre alimentos y comidas con cantidades\n\nAsegurar que los modelos capturen toda la información nutricional necesaria: calorías, proteínas, carbohidratos, grasas, fibra, etc.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Migraciones de base de datos para el módulo de nutrición",
+            "description": "Crear y ejecutar las migraciones de Alembic para las tablas del módulo de nutrición",
+            "dependencies": [],
+            "details": "1. Generar script de migración con Alembic\n2. Revisar el script generado para asegurar la correcta estructura\n3. Ejecutar la migración\n4. Verificar que las tablas se crearon correctamente en la base de datos\n5. Crear script de rollback en caso de problemas",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Población de la base de datos de alimentos",
+            "description": "Importar y estructurar una base de datos inicial de alimentos con información nutricional completa",
+            "dependencies": [],
+            "details": "1. Investigar y obtener fuentes de datos nutricionales (USDA, bases de datos abiertas)\n2. Crear script de importación para procesar los datos\n3. Normalizar unidades y valores nutricionales\n4. Importar al menos 1000 alimentos comunes con información nutricional completa\n5. Categorizar los alimentos para facilitar la búsqueda",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Desarrollo de la búsqueda de alimentos",
+            "description": "Implementar la interfaz y funcionalidad de búsqueda de alimentos en la base de datos",
+            "dependencies": [],
+            "details": "1. Crear componente de búsqueda con filtros (nombre, categoría, valores nutricionales)\n2. Implementar búsqueda en tiempo real con Streamlit\n3. Mostrar resultados con información nutricional relevante\n4. Permitir selección de alimentos para añadir a comidas\n5. Optimizar consultas para rendimiento con grandes volúmenes de datos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implementación del registro de comidas",
+            "description": "Desarrollar la interfaz y lógica para que los usuarios registren sus comidas diarias",
+            "dependencies": [],
+            "details": "1. Crear formulario para selección de fecha y tipo de comida\n2. Implementar interfaz para añadir alimentos a una comida con cantidades\n3. Calcular automáticamente valores nutricionales basados en porciones\n4. Permitir edición y eliminación de entradas\n5. Implementar guardado automático de datos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Cálculo y visualización de macronutrientes",
+            "description": "Implementar el cálculo y visualización de macronutrientes diarios y por comida",
+            "dependencies": [],
+            "details": "1. Desarrollar algoritmos para calcular totales diarios de calorías, proteínas, carbohidratos y grasas\n2. Crear visualización de distribución de macronutrientes (porcentajes)\n3. Implementar comparación con objetivos personalizados\n4. Mostrar desglose por comida\n5. Calcular y mostrar déficit/superávit calórico",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Desarrollo de gráficos nutricionales",
+            "description": "Implementar gráficos y visualizaciones para el seguimiento nutricional a lo largo del tiempo",
+            "dependencies": [],
+            "details": "1. Crear gráficos de línea para seguimiento de calorías y macronutrientes a lo largo del tiempo\n2. Implementar gráficos de barras para comparación entre días\n3. Desarrollar gráficos de distribución de macronutrientes (gráficos circulares)\n4. Añadir visualización de tendencias y promedios\n5. Implementar filtros temporales (semana, mes, personalizado)",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implementación del Sistema de Metas y Objetivos",
+        "description": "Desarrollar un sistema que permita a los usuarios establecer metas relacionadas con entrenamiento, nutrición y métricas corporales, y realizar seguimiento de su progreso.",
+        "details": "1. Crear modelo para metas en SQLAlchemy:\n   ```python\n   class Goal(Base):\n       __tablename__ = 'goals'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       title = Column(String, nullable=False)\n       description = Column(Text)\n       category = Column(String)  # 'weight', 'exercise', 'nutrition'\n       target_value = Column(Float)  # valor numérico objetivo\n       target_unit = Column(String)  # kg, reps, kcal, etc.\n       start_date = Column(Date, nullable=False)\n       target_date = Column(Date)\n       completed = Column(Boolean, default=False)\n       completed_date = Column(Date)\n   ```\n2. Crear migración para la tabla de metas\n3. Implementar vistas de Streamlit para:\n   - Creación y edición de metas\n   - Visualización de metas activas\n   - Seguimiento de progreso hacia las metas\n4. Desarrollar visualizaciones para mostrar:\n   - Progreso actual vs. objetivo\n   - Tiempo restante para alcanzar la meta\n   - Historial de metas completadas\n5. Implementar notificaciones o recordatorios sobre metas próximas a vencer\n6. Añadir funcionalidad para marcar metas como completadas",
+        "testStrategy": "1. Verificar la creación de diferentes tipos de metas\n2. Probar el cálculo de progreso hacia las metas\n3. Comprobar la visualización correcta del progreso\n4. Verificar la funcionalidad de marcar metas como completadas\n5. Probar con diferentes fechas objetivo\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación del modelo de metas y objetivos",
+            "description": "Implementar el modelo de datos para metas y objetivos utilizando SQLAlchemy, incluyendo relaciones con usuarios y categorías de metas.",
+            "dependencies": [],
+            "details": "Desarrollar el modelo Goal completo con todos los campos necesarios (id, user_id, title, description, category, target_value, target_unit, start_date, end_date, status). Implementar métodos para calcular el progreso actual hacia la meta basado en los datos de los módulos relacionados (entrenamiento, nutrición, métricas). Incluir validaciones para los diferentes tipos de metas.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Migraciones de base de datos para metas y objetivos",
+            "description": "Crear y ejecutar las migraciones de base de datos necesarias para implementar las tablas de metas y objetivos.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Utilizar Alembic para generar las migraciones. Incluir la creación de la tabla principal de metas, índices para búsquedas eficientes, y restricciones de clave foránea para mantener la integridad referencial con las tablas de usuarios, métricas, entrenamientos y nutrición. Documentar el proceso de migración para futuras referencias.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Desarrollo de la vista de creación y edición de metas",
+            "description": "Implementar la interfaz de usuario en Streamlit para permitir a los usuarios crear, editar y eliminar metas personalizadas.",
+            "dependencies": [
+              "6.1",
+              "6.2"
+            ],
+            "details": "Crear formularios para los diferentes tipos de metas (peso, ejercicio, nutrición). Implementar validaciones de entrada para asegurar datos correctos. Diseñar una experiencia de usuario intuitiva con campos dinámicos según el tipo de meta seleccionada. Incluir funcionalidad para establecer fechas límite y valores objetivo con sus respectivas unidades.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implementación del seguimiento de progreso hacia metas",
+            "description": "Desarrollar la lógica para calcular y actualizar automáticamente el progreso del usuario hacia sus metas establecidas.",
+            "dependencies": [
+              "6.1",
+              "6.2",
+              "6.3"
+            ],
+            "details": "Implementar algoritmos para calcular el progreso actual basado en los datos más recientes del usuario. Crear funciones para diferentes tipos de metas (reducción de peso, aumento de fuerza, consumo de calorías, etc.). Desarrollar la lógica para determinar si una meta se ha completado y actualizar su estado automáticamente. Implementar notificaciones para metas próximas a vencerse.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Desarrollo de visualizaciones de progreso hacia metas",
+            "description": "Crear gráficos y visualizaciones interactivas que muestren el progreso del usuario hacia sus metas establecidas.",
+            "dependencies": [
+              "6.1",
+              "6.2",
+              "6.3",
+              "6.4"
+            ],
+            "details": "Utilizar Plotly para crear visualizaciones personalizadas según el tipo de meta. Implementar gráficos de progreso temporal, barras de progreso para metas actuales, y proyecciones basadas en tendencias actuales. Diseñar un dashboard de metas que muestre todas las metas activas del usuario con su progreso actual. Incluir opciones para filtrar y ordenar metas por categoría, fecha límite o progreso.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Mejoras en el Módulo de Entrenamiento (Características P1)",
+        "description": "Implementar características importantes del módulo de entrenamiento: creación de rutinas personalizadas, temporizador de descanso entre series y biblioteca multimedia de ejercicios.",
+        "details": "1. Extender el modelo de Exercise para incluir multimedia:\n   ```python\n   # Añadir a la clase Exercise existente\n   image_url = Column(String)\n   video_url = Column(String)\n   ```\n2. Implementar funcionalidad para crear rutinas personalizadas:\n   - Interfaz para seleccionar ejercicios\n   - Organización de ejercicios en rutinas\n   - Guardado y edición de rutinas\n3. Desarrollar temporizador de descanso entre series:\n   - Interfaz con cuenta regresiva\n   - Configuración de tiempo de descanso personalizado\n   - Notificaciones visuales/sonoras\n4. Crear biblioteca multimedia:\n   - Visualización de imágenes de ejercicios\n   - Reproducción de videos demostrativos\n   - Instrucciones detalladas de ejecución\n5. Actualizar migraciones para los nuevos campos\n6. Mejorar la interfaz de usuario para estas nuevas funcionalidades",
+        "testStrategy": "1. Verificar la carga y visualización de imágenes y videos\n2. Probar la creación y edición de rutinas personalizadas\n3. Comprobar el funcionamiento del temporizador\n4. Verificar las notificaciones del temporizador\n5. Probar la navegación por la biblioteca multimedia\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Extensión del modelo de ejercicios para multimedia",
+            "description": "Modificar el modelo de Exercise existente para incluir campos de imagen y video, permitiendo la asociación de contenido multimedia con cada ejercicio.",
+            "dependencies": [],
+            "details": "1. Extender la clase Exercise con campos para URLs de imagen y video\n2. Crear migraciones de base de datos para los nuevos campos\n3. Implementar validación de URLs para formatos de imagen/video compatibles\n4. Desarrollar funcionalidad para previsualizar multimedia en la interfaz de usuario",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implementación de rutinas personalizadas",
+            "description": "Desarrollar la funcionalidad que permita a los usuarios crear, guardar y editar rutinas de entrenamiento personalizadas con ejercicios seleccionados.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "1. Diseñar interfaz para selección y organización de ejercicios\n2. Implementar modelo de datos para rutinas personalizadas\n3. Desarrollar funcionalidad de guardado y edición de rutinas\n4. Crear vista de detalles de rutina con lista de ejercicios incluidos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Desarrollo del temporizador de descanso",
+            "description": "Crear un temporizador configurable para los períodos de descanso entre series de ejercicios, con notificaciones visuales y sonoras.",
+            "dependencies": [],
+            "details": "1. Implementar interfaz con cuenta regresiva visual\n2. Desarrollar sistema de configuración de tiempos de descanso personalizados\n3. Integrar notificaciones sonoras y visuales al finalizar el tiempo\n4. Permitir pausar, reanudar y reiniciar el temporizador",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Creación de biblioteca multimedia de ejercicios",
+            "description": "Desarrollar una biblioteca organizada de ejercicios con contenido multimedia, categorización y funciones de búsqueda.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "1. Diseñar interfaz de navegación por categorías de ejercicios\n2. Implementar sistema de búsqueda y filtrado de ejercicios\n3. Desarrollar visualización de detalles de ejercicios con reproducción multimedia\n4. Crear funcionalidad para añadir ejercicios a favoritos o rutinas desde la biblioteca",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Mejoras en el Módulo de Nutrición (Características P1)",
+        "description": "Implementar características importantes del módulo de nutrición: planificador de comidas semanal, recordatorios de ingesta de agua y gráficos de tendencias nutricionales.",
+        "details": "1. Crear modelos adicionales en SQLAlchemy:\n   ```python\n   class MealPlan(Base):\n       __tablename__ = 'meal_plans'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       name = Column(String, nullable=False)\n       start_date = Column(Date, nullable=False)\n       end_date = Column(Date, nullable=False)\n\n   class PlannedMeal(Base):\n       __tablename__ = 'planned_meals'\n       id = Column(Integer, primary_key=True)\n       meal_plan_id = Column(Integer, ForeignKey('meal_plans.id'))\n       day_of_week = Column(Integer)  # 0-6 para lunes-domingo\n       meal_id = Column(Integer, ForeignKey('meals.id'))\n       notes = Column(Text)\n\n   class WaterLog(Base):\n       __tablename__ = 'water_logs'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       date = Column(Date, nullable=False)\n       amount = Column(Float)  # en ml\n       time = Column(Time)\n   ```\n2. Crear migraciones para estas tablas\n3. Implementar planificador de comidas semanal:\n   - Interfaz para seleccionar comidas por día\n   - Vista de calendario semanal\n   - Funcionalidad para copiar planes anteriores\n4. Desarrollar sistema de recordatorios de agua:\n   - Registro de consumo de agua\n   - Cálculo de objetivo diario personalizado\n   - Recordatorios programables\n5. Implementar gráficos avanzados de tendencias nutricionales:\n   - Patrones semanales/mensuales\n   - Correlación con peso/métricas\n   - Análisis de déficit/superávit calórico",
+        "testStrategy": "1. Verificar la creación y visualización de planes de comidas\n2. Probar el registro de ingesta de agua\n3. Comprobar los recordatorios de agua\n4. Verificar los gráficos de tendencias nutricionales\n5. Probar la funcionalidad de copiar planes anteriores\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Creación de modelos adicionales para nutrición",
+            "description": "Implementar los modelos SQLAlchemy necesarios para el módulo de nutrición, incluyendo MealPlan, PlannedMeal y WaterIntake.",
+            "dependencies": [],
+            "details": "Desarrollar los siguientes modelos:\n1. MealPlan y PlannedMeal como se especifica en los detalles de implementación\n2. Crear modelo WaterIntake para registrar la ingesta de agua\n3. Crear modelo NutritionGoal para establecer objetivos nutricionales\n4. Documentar las relaciones entre modelos\n5. Implementar métodos auxiliares necesarios en los modelos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Migraciones de base de datos para nutrición",
+            "description": "Crear y ejecutar las migraciones de base de datos necesarias para los nuevos modelos del módulo de nutrición.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "1. Generar scripts de migración para los nuevos modelos\n2. Implementar migraciones para añadir tablas meal_plans, planned_meals y water_intake\n3. Crear índices apropiados para optimizar consultas\n4. Establecer restricciones de clave foránea\n5. Probar las migraciones en entorno de desarrollo\n6. Documentar el proceso de migración",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implementación del planificador de comidas semanal",
+            "description": "Desarrollar la funcionalidad de planificación de comidas con vista de calendario semanal y opciones para copiar planes anteriores.",
+            "dependencies": [
+              "8.1",
+              "8.2"
+            ],
+            "details": "1. Crear interfaz de usuario con vista de calendario semanal\n2. Implementar funcionalidad para añadir comidas a días específicos\n3. Desarrollar sistema para copiar planes de semanas anteriores\n4. Implementar cálculo automático de macronutrientes para el plan semanal\n5. Añadir funcionalidad de arrastrar y soltar para reorganizar comidas\n6. Integrar con la base de datos de alimentos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Desarrollo del sistema de recordatorios de agua",
+            "description": "Implementar el sistema de seguimiento y recordatorios de ingesta de agua con notificaciones personalizables.",
+            "dependencies": [
+              "8.1",
+              "8.2"
+            ],
+            "details": "1. Crear interfaz para registrar ingesta de agua\n2. Implementar sistema de notificaciones programables\n3. Desarrollar algoritmo para calcular recomendaciones de ingesta basadas en peso y actividad\n4. Añadir gráficos de seguimiento diario y semanal\n5. Implementar personalización de objetivos de ingesta\n6. Integrar con el sistema general de notificaciones",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implementación de gráficos avanzados de tendencias nutricionales",
+            "description": "Desarrollar visualizaciones interactivas para mostrar tendencias nutricionales y correlaciones con otros datos de salud.",
+            "dependencies": [
+              "8.1",
+              "8.2",
+              "8.3"
+            ],
+            "details": "1. Implementar gráficos de líneas para seguimiento de macronutrientes a lo largo del tiempo\n2. Desarrollar gráficos de correlación entre nutrición y métricas corporales\n3. Crear visualizaciones de distribución de macronutrientes (gráficos circulares)\n4. Implementar filtros temporales (diario, semanal, mensual)\n5. Añadir funcionalidad de exportación de datos\n6. Optimizar rendimiento para grandes conjuntos de datos",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Mejoras en el Módulo de Métricas Corporales (Características P1)",
+        "description": "Implementar características importantes del módulo de métricas corporales: registro de medidas corporales adicionales, almacenamiento de fotos de progreso y establecimiento de metas específicas.",
+        "details": "1. Extender el modelo BodyMetric para incluir medidas adicionales:\n   ```python\n   # Añadir a la clase BodyMetric existente\n   chest = Column(Float)  # en cm\n   waist = Column(Float)  # en cm\n   hips = Column(Float)   # en cm\n   arms = Column(Float)   # en cm\n   thighs = Column(Float) # en cm\n   body_fat = Column(Float)  # en %\n   ```\n2. Crear modelo para fotos de progreso:\n   ```python\n   class ProgressPhoto(Base):\n       __tablename__ = 'progress_photos'\n       id = Column(Integer, primary_key=True)\n       user_id = Column(Integer, ForeignKey('users.id'))\n       date = Column(Date, nullable=False)\n       photo_url = Column(String, nullable=False)\n       category = Column(String)  # 'front', 'side', 'back', etc.\n       notes = Column(Text)\n   ```\n3. Crear migraciones para estos cambios y nuevas tablas\n4. Implementar interfaz para:\n   - Registro de medidas corporales adicionales\n   - Carga y visualización de fotos de progreso\n   - Organización cronológica de fotos\n5. Desarrollar visualizaciones para:\n   - Evolución de diferentes medidas corporales\n   - Comparación de medidas actuales vs. iniciales\n6. Integrar con el sistema de metas para establecer objetivos específicos de medidas corporales",
+        "testStrategy": "1. Verificar el registro de medidas corporales adicionales\n2. Probar la carga y visualización de fotos de progreso\n3. Comprobar la organización cronológica de fotos\n4. Verificar los gráficos de evolución de medidas\n5. Probar la integración con el sistema de metas\n6. Verificar la persistencia de datos en la base de datos",
+        "priority": "medium",
+        "dependencies": [
+          4,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Extensión del modelo de métricas corporales",
+            "description": "Ampliar el modelo BodyMetric existente para incluir medidas corporales adicionales como pecho, cintura, caderas, brazos, muslos y porcentaje de grasa corporal.",
+            "dependencies": [],
+            "details": "Implementar las modificaciones en el modelo BodyMetric:\n```python\n# Añadir a la clase BodyMetric existente\nchest = Column(Float)  # en cm\nwaist = Column(Float)  # en cm\nhips = Column(Float)   # en cm\narms = Column(Float)   # en cm\nthighs = Column(Float) # en cm\nbody_fat = Column(Float)  # en %\n```\nActualizar los formularios de entrada de datos y las consultas relacionadas para manejar estos nuevos campos. Crear migraciones de base de datos para aplicar los cambios al esquema existente.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implementación del sistema de fotos de progreso",
+            "description": "Desarrollar un sistema para almacenar, organizar y visualizar fotos de progreso corporal de los usuarios a lo largo del tiempo.",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Crear el modelo ProgressPhoto:\n```python\nclass ProgressPhoto(Base):\n    __tablename__ = 'progress_photos'\n    id = Column(Integer, primary_key=True)\n    user_id = Column(Integer, ForeignKey('users.id'))\n    date = Column(DateTime, default=datetime.utcnow)\n    photo_url = Column(String, nullable=False)\n    category = Column(String)  # 'front', 'side', 'back'\n    notes = Column(Text)\n```\nImplementar la funcionalidad de carga de imágenes con almacenamiento seguro, interfaz para visualizar fotos cronológicamente, y opciones para comparar fotos de diferentes fechas lado a lado.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Desarrollo de visualizaciones para medidas adicionales",
+            "description": "Crear gráficos y visualizaciones interactivas para mostrar la evolución de las nuevas métricas corporales a lo largo del tiempo.",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Implementar gráficos de líneas para mostrar la evolución de cada medida corporal (pecho, cintura, caderas, etc.) a lo largo del tiempo. Desarrollar visualizaciones comparativas que permitan al usuario seleccionar qué métricas desea ver juntas. Incluir opciones para diferentes rangos de tiempo (semanal, mensual, trimestral, anual) y añadir indicadores visuales para destacar tendencias positivas o negativas según los objetivos del usuario.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integración con el sistema de metas específicas",
+            "description": "Conectar el módulo de métricas corporales con el sistema de metas para permitir a los usuarios establecer objetivos específicos relacionados con sus medidas corporales.",
+            "dependencies": [
+              "9.1",
+              "9.2",
+              "9.3"
+            ],
+            "details": "Extender el sistema de metas existente para soportar objetivos específicos de métricas corporales:\n- Permitir la creación de metas para cada tipo de medida corporal\n- Implementar cálculo automático de progreso basado en las mediciones registradas\n- Desarrollar notificaciones y recordatorios para actualizar medidas\n- Crear visualizaciones que muestren el progreso hacia las metas junto con las fotos de progreso\n- Implementar recomendaciones personalizadas basadas en el progreso del usuario",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Optimización, Seguridad y Preparación para Producción",
+        "description": "Implementar optimizaciones de rendimiento, medidas de seguridad, y preparar la aplicación para su despliegue en producción.",
+        "details": "1. Optimizaciones de rendimiento:\n   - Implementar caché para consultas frecuentes\n   - Optimizar consultas SQL con índices adecuados\n   - Mejorar tiempos de carga de la interfaz de usuario\n2. Medidas de seguridad:\n   - Implementar HTTPS\n   - Protección contra inyección SQL\n   - Validación de entradas de usuario\n   - Encriptación de datos sensibles\n3. Cumplimiento normativo:\n   - Implementar políticas de privacidad según GDPR/LGPD\n   - Consentimiento para recopilación de datos\n   - Funcionalidad para exportar/eliminar datos de usuario\n4. Sistema de backups:\n   - Configurar backups automáticos diarios\n   - Implementar procedimiento de recuperación\n5. Monitoreo y logging:\n   - Implementar sistema de logging\n   - Configurar alertas para errores críticos\n6. Documentación:\n   - Actualizar README con instrucciones de instalación y uso\n   - Documentar API y estructura de base de datos\n   - Crear guías de usuario\n7. Pruebas finales:\n   - Pruebas de carga\n   - Pruebas de seguridad\n   - Pruebas de usabilidad",
+        "testStrategy": "1. Realizar pruebas de carga para verificar rendimiento con múltiples usuarios\n2. Ejecutar pruebas de penetración para identificar vulnerabilidades\n3. Verificar tiempos de respuesta < 2 segundos según requerimientos\n4. Comprobar el funcionamiento de backups y recuperación\n5. Verificar el cumplimiento de normativas de privacidad\n6. Realizar pruebas de usabilidad con usuarios reales\n7. Verificar que la documentación está completa y actualizada",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implementación de optimizaciones de rendimiento",
+            "description": "Mejorar el rendimiento de la aplicación mediante la implementación de técnicas de caché, optimización de consultas y mejoras en la interfaz de usuario.",
+            "dependencies": [],
+            "details": "1. Implementar Redis para caché de consultas frecuentes\n2. Optimizar consultas SQL con índices adecuados en tablas principales\n3. Realizar análisis de consultas lentas y optimizarlas\n4. Implementar lazy loading para imágenes\n5. Minificar y comprimir archivos CSS/JS\n6. Implementar paginación eficiente en listados\n7. Configurar CDN para recursos estáticos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implementación de medidas de seguridad",
+            "description": "Fortalecer la seguridad de la aplicación mediante la implementación de protocolos y prácticas de seguridad estándar.",
+            "dependencies": [],
+            "details": "1. Configurar HTTPS con certificados SSL\n2. Implementar protección contra ataques CSRF\n3. Configurar cabeceras de seguridad HTTP\n4. Implementar protección contra inyección SQL usando parámetros preparados\n5. Implementar validación de entradas en frontend y backend\n6. Configurar políticas de contraseñas seguras\n7. Implementar rate limiting para prevenir ataques de fuerza bruta\n8. Encriptar datos sensibles en la base de datos",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implementación de cumplimiento normativo de privacidad",
+            "description": "Asegurar que la aplicación cumpla con las normativas de privacidad como GDPR/LGPD mediante la implementación de políticas y funcionalidades específicas.",
+            "dependencies": [
+              "10.2"
+            ],
+            "details": "1. Implementar banner de consentimiento de cookies\n2. Crear política de privacidad y términos de servicio\n3. Desarrollar funcionalidad para exportar datos personales\n4. Implementar mecanismo para eliminación de cuenta y datos\n5. Configurar registros de auditoría para acciones relacionadas con datos personales\n6. Implementar sistema de gestión de consentimientos\n7. Revisar y documentar todos los flujos de datos personales",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Configuración de sistema de backups",
+            "description": "Implementar un sistema robusto de copias de seguridad para garantizar la recuperación de datos en caso de fallos.",
+            "dependencies": [],
+            "details": "1. Configurar backups automáticos diarios de la base de datos\n2. Implementar backups incrementales semanales\n3. Configurar almacenamiento externo seguro para backups\n4. Desarrollar y documentar procedimientos de restauración\n5. Implementar verificación automática de integridad de backups\n6. Configurar notificaciones de estado de backups\n7. Realizar pruebas de restauración completa",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implementación de monitoreo y logging",
+            "description": "Configurar sistemas de monitoreo y registro para supervisar el rendimiento, detectar problemas y facilitar la resolución de incidencias.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "1. Implementar sistema de logging centralizado\n2. Configurar alertas para errores críticos\n3. Implementar monitoreo de rendimiento de la aplicación\n4. Configurar dashboards para visualización de métricas clave\n5. Implementar monitoreo de disponibilidad y tiempo de respuesta\n6. Configurar registro de accesos y actividades de usuarios\n7. Implementar monitoreo de uso de recursos del servidor",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Creación de documentación completa",
+            "description": "Desarrollar documentación técnica y de usuario completa para facilitar el mantenimiento y uso de la aplicación.",
+            "dependencies": [
+              "10.1",
+              "10.2",
+              "10.3",
+              "10.4",
+              "10.5"
+            ],
+            "details": "1. Crear manual técnico de la arquitectura del sistema\n2. Documentar todos los endpoints de la API\n3. Crear guías de instalación y configuración\n4. Desarrollar manual de usuario con capturas de pantalla\n5. Documentar procedimientos de mantenimiento y resolución de problemas\n6. Crear documentación de seguridad y cumplimiento normativo\n7. Desarrollar documentación para desarrolladores (contribución al código)",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Realización de pruebas finales de carga y seguridad",
+            "description": "Ejecutar pruebas exhaustivas de carga y seguridad para verificar que la aplicación está lista para producción.",
+            "dependencies": [
+              "10.1",
+              "10.2",
+              "10.3",
+              "10.4",
+              "10.5"
+            ],
+            "details": "1. Realizar pruebas de carga simulando múltiples usuarios concurrentes\n2. Ejecutar pruebas de estrés para identificar puntos de fallo\n3. Realizar análisis de vulnerabilidades con herramientas automatizadas\n4. Contratar servicio de pentesting externo\n5. Verificar tiempos de respuesta bajo diferentes condiciones\n6. Probar procedimientos de recuperación ante desastres\n7. Realizar pruebas de integración final de todos los componentes",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implementación de Edición y Eliminación de Alimentos en Nutrición",
+        "description": "Desarrollar funcionalidad para que los usuarios puedan modificar y eliminar alimentos desde la interfaz de gestión de alimentos en el módulo de nutrición.",
+        "details": "1. Extender la API REST para soportar operaciones de actualización y eliminación:\n   ```python\n   @app.route('/api/foods/<int:food_id>', methods=['PUT'])\n   @login_required\n   def update_food(food_id):\n       food = Food.query.get_or_404(food_id)\n       data = request.get_json()\n       \n       # Verificar permisos (si el alimento pertenece al usuario o es un admin)\n       if not current_user.is_admin and food.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n           \n       # Actualizar campos\n       food.name = data.get('name', food.name)\n       food.calories = data.get('calories', food.calories)\n       food.protein = data.get('protein', food.protein)\n       food.carbs = data.get('carbs', food.carbs)\n       food.fat = data.get('fat', food.fat)\n       food.fiber = data.get('fiber', food.fiber)\n       food.serving_size = data.get('serving_size', food.serving_size)\n       food.serving_unit = data.get('serving_unit', food.serving_unit)\n       \n       db.session.commit()\n       return jsonify({'message': 'Alimento actualizado correctamente'})\n   \n   @app.route('/api/foods/<int:food_id>', methods=['DELETE'])\n   @login_required\n   def delete_food(food_id):\n       food = Food.query.get_or_404(food_id)\n       \n       # Verificar permisos\n       if not current_user.is_admin and food.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Verificar si el alimento está siendo usado en comidas\n       meals_with_food = Meal.query.filter(Meal.foods.any(id=food_id)).all()\n       if meals_with_food and not request.args.get('force'):\n           return jsonify({\n               'error': 'Este alimento está siendo usado en comidas registradas',\n               'meals_count': len(meals_with_food)\n           }), 409\n       \n       db.session.delete(food)\n       db.session.commit()\n       return jsonify({'message': 'Alimento eliminado correctamente'})\n   ```\n\n2. Implementar interfaz de usuario para edición:\n   - Crear formulario modal para editar alimentos\n   - Implementar validación de campos en frontend\n   - Mostrar feedback al usuario sobre el resultado de la operación\n\n3. Implementar interfaz para eliminación:\n   - Añadir botón de eliminación en la lista de alimentos\n   - Implementar diálogo de confirmación antes de eliminar\n   - Mostrar advertencia si el alimento está siendo usado en comidas registradas\n   - Ofrecer opción para forzar eliminación (con consecuencias explicadas)\n\n4. Gestión de casos especiales:\n   - Manejar alimentos predefinidos del sistema (solo administradores pueden modificarlos)\n   - Implementar registro de auditoría para cambios en alimentos\n   - Considerar la posibilidad de \"soft delete\" para preservar integridad referencial\n\n5. Actualización en tiempo real:\n   - Actualizar la interfaz sin necesidad de recargar la página\n   - Implementar animaciones sutiles para mejorar la experiencia de usuario",
+        "testStrategy": "1. Pruebas unitarias:\n   - Verificar que la API de actualización modifica correctamente todos los campos\n   - Comprobar que la API de eliminación elimina correctamente el alimento\n   - Verificar que los permisos funcionan (usuarios no pueden modificar alimentos de otros)\n   - Comprobar que se detectan correctamente alimentos en uso\n\n2. Pruebas de integración:\n   - Verificar que al editar un alimento, los cambios se reflejan en las comidas existentes\n   - Comprobar que al eliminar un alimento, se maneja correctamente la integridad referencial\n   - Verificar la sincronización entre frontend y backend\n\n3. Pruebas de interfaz:\n   - Comprobar que el formulario de edición carga correctamente los datos existentes\n   - Verificar que la validación de campos funciona correctamente\n   - Comprobar que el diálogo de confirmación de eliminación muestra información relevante\n   - Verificar que los mensajes de error/éxito son claros y visibles\n\n4. Pruebas de casos límite:\n   - Intentar eliminar alimentos que están siendo utilizados en comidas\n   - Probar la edición con valores extremos (muy grandes o muy pequeños)\n   - Verificar el comportamiento con conexiones lentas o inestables\n\n5. Pruebas de regresión:\n   - Comprobar que la funcionalidad de registro de comidas sigue funcionando correctamente\n   - Verificar que los cálculos nutricionales se actualizan correctamente tras editar alimentos",
+        "status": "done",
+        "dependencies": [
+          5
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Implementación de Edición y Eliminación de Entrenamientos",
+        "description": "Desarrollar funcionalidad para que los usuarios puedan modificar y eliminar entrenamientos desde el historial de entrenamientos en el módulo de entrenamiento.",
+        "details": "1. Extender la API REST para soportar operaciones de actualización y eliminación de entrenamientos:\n   ```python\n   @app.route('/api/workouts/<int:workout_id>', methods=['PUT'])\n   @login_required\n   def update_workout(workout_id):\n       workout = Workout.query.get_or_404(workout_id)\n       data = request.get_json()\n       \n       # Verificar permisos (si el entrenamiento pertenece al usuario)\n       if workout.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Actualizar campos básicos del entrenamiento\n       workout.name = data.get('name', workout.name)\n       workout.date = data.get('date', workout.date)\n       workout.notes = data.get('notes', workout.notes)\n       \n       # Actualizar ejercicios del entrenamiento\n       if 'exercises' in data:\n           # Eliminar registros existentes de ejercicios para este entrenamiento\n           WorkoutExercise.query.filter_by(workout_id=workout.id).delete()\n           \n           # Crear nuevos registros de ejercicios\n           for exercise_data in data['exercises']:\n               exercise_id = exercise_data['exercise_id']\n               \n               # Crear el ejercicio del entrenamiento\n               workout_exercise = WorkoutExercise(\n                   workout_id=workout.id,\n                   exercise_id=exercise_id,\n                   order=exercise_data.get('order', 0)\n               )\n               db.session.add(workout_exercise)\n               \n               # Crear los sets para este ejercicio\n               for set_data in exercise_data.get('sets', []):\n                   exercise_set = ExerciseSet(\n                       workout_exercise_id=workout_exercise.id,\n                       reps=set_data.get('reps'),\n                       weight=set_data.get('weight'),\n                       duration=set_data.get('duration'),\n                       notes=set_data.get('notes')\n                   )\n                   db.session.add(exercise_set)\n       \n       db.session.commit()\n       return jsonify({'message': 'Entrenamiento actualizado correctamente', 'workout': workout.to_dict()})\n\n   @app.route('/api/workouts/<int:workout_id>', methods=['DELETE'])\n   @login_required\n   def delete_workout(workout_id):\n       workout = Workout.query.get_or_404(workout_id)\n       \n       # Verificar permisos (si el entrenamiento pertenece al usuario)\n       if workout.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Eliminar registros relacionados (cascade)\n       workout_exercises = WorkoutExercise.query.filter_by(workout_id=workout.id).all()\n       for we in workout_exercises:\n           ExerciseSet.query.filter_by(workout_exercise_id=we.id).delete()\n       \n       WorkoutExercise.query.filter_by(workout_id=workout.id).delete()\n       \n       # Eliminar el entrenamiento\n       db.session.delete(workout)\n       db.session.commit()\n       \n       return jsonify({'message': 'Entrenamiento eliminado correctamente'})\n   ```\n\n2. Implementar interfaz de usuario para edición de entrenamientos:\n   - Añadir botones de edición en la vista de historial de entrenamientos\n   - Crear formulario modal para editar entrenamientos existentes\n   - Permitir modificar nombre, fecha, ejercicios, series, repeticiones y pesos\n   - Implementar validación de datos en el frontend\n   - Mostrar mensajes de confirmación tras ediciones exitosas\n\n3. Implementar interfaz de usuario para eliminación de entrenamientos:\n   - Añadir botones de eliminación en la vista de historial de entrenamientos\n   - Crear diálogo de confirmación para prevenir eliminaciones accidentales\n   - Mostrar mensajes de confirmación tras eliminaciones exitosas\n   - Actualizar la lista de entrenamientos tras la eliminación\n\n4. Implementar manejo de errores:\n   - Mostrar mensajes de error apropiados cuando la edición/eliminación falla\n   - Manejar casos de concurrencia (si otro dispositivo modifica el mismo entrenamiento)\n   - Implementar timeout y reintentos para operaciones de red\n   - Validar permisos en el backend para prevenir acceso no autorizado\n\n5. Actualizar la documentación de la API:\n   - Documentar los nuevos endpoints\n   - Especificar formatos de solicitud y respuesta\n   - Documentar códigos de error posibles\n   - Actualizar ejemplos de uso",
+        "testStrategy": "1. Pruebas unitarias:\n   - Verificar que la API de actualización modifica correctamente todos los campos del entrenamiento\n   - Comprobar que la API de eliminación elimina correctamente el entrenamiento y todos sus registros relacionados\n   - Verificar que los permisos funcionan (usuarios no pueden modificar entrenamientos de otros)\n   - Comprobar que se detectan y manejan correctamente los errores de validación\n\n2. Pruebas de integración:\n   - Verificar que la edición de un entrenamiento actualiza correctamente todos los ejercicios y series asociados\n   - Comprobar que la eliminación de un entrenamiento elimina correctamente todos los registros relacionados en cascada\n   - Verificar que los cambios se reflejan correctamente en la base de datos\n   - Comprobar que la interfaz de usuario se actualiza correctamente después de las operaciones\n\n3. Pruebas de interfaz de usuario:\n   - Verificar que los botones de edición y eliminación aparecen correctamente en el historial\n   - Comprobar que el formulario de edición se carga con los datos correctos del entrenamiento seleccionado\n   - Verificar que se pueden modificar todos los campos (nombre, fecha, ejercicios, series, etc.)\n   - Comprobar que el diálogo de confirmación de eliminación funciona correctamente\n   - Verificar que los mensajes de éxito y error se muestran apropiadamente\n\n4. Pruebas de casos límite:\n   - Probar la edición de entrenamientos con muchos ejercicios y series\n   - Verificar el comportamiento al intentar eliminar un entrenamiento que está siendo visualizado por otro usuario\n   - Comprobar el manejo de caracteres especiales en los campos de texto\n   - Verificar el comportamiento con conexiones de red lentas o intermitentes\n\n5. Pruebas de regresión:\n   - Verificar que las funcionalidades existentes del módulo de entrenamiento siguen funcionando correctamente\n   - Comprobar que los gráficos de progreso se actualizan correctamente después de editar/eliminar entrenamientos\n   - Verificar que las estadísticas y métricas se recalculan correctamente",
+        "status": "done",
+        "dependencies": [
+          3,
+          7
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Implementación de Edición y Eliminación de Métricas Corporales",
+        "description": "Desarrollar funcionalidad para que los usuarios puedan modificar y eliminar métricas corporales desde el historial de métricas en el módulo correspondiente.",
+        "details": "1. Extender la API REST para soportar operaciones de actualización y eliminación de métricas corporales:\n   ```python\n   @app.route('/api/body-metrics/<int:metric_id>', methods=['PUT'])\n   @login_required\n   def update_body_metric(metric_id):\n       metric = BodyMetric.query.get_or_404(metric_id)\n       data = request.get_json()\n       \n       # Verificar permisos (si la métrica pertenece al usuario)\n       if metric.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Actualizar campos\n       if 'date' in data:\n           metric.date = datetime.strptime(data['date'], '%Y-%m-%d').date()\n       if 'weight' in data:\n           metric.weight = data['weight']\n       if 'height' in data:\n           metric.height = data['height']\n       # Actualizar campos adicionales si existen (de Task 9)\n       if 'chest' in data:\n           metric.chest = data['chest']\n       if 'waist' in data:\n           metric.waist = data['waist']\n       if 'hips' in data:\n           metric.hips = data['hips']\n       if 'arms' in data:\n           metric.arms = data['arms']\n       if 'thighs' in data:\n           metric.thighs = data['thighs']\n       if 'body_fat' in data:\n           metric.body_fat = data['body_fat']\n       \n       db.session.commit()\n       return jsonify(metric.to_dict())\n   \n   @app.route('/api/body-metrics/<int:metric_id>', methods=['DELETE'])\n   @login_required\n   def delete_body_metric(metric_id):\n       metric = BodyMetric.query.get_or_404(metric_id)\n       \n       # Verificar permisos\n       if metric.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       db.session.delete(metric)\n       db.session.commit()\n       return jsonify({'success': True})\n   ```\n\n2. Implementar componentes de interfaz de usuario para edición y eliminación:\n   - Añadir botones de edición y eliminación en cada entrada del historial de métricas\n   - Crear un formulario modal para editar métricas existentes\n   - Implementar diálogo de confirmación para eliminación\n   \n   ```javascript\n   // Componente React para el modal de edición\n   function EditMetricModal({ isOpen, onClose, metric, onSave }) {\n     const [formData, setFormData] = useState({\n       date: metric.date,\n       weight: metric.weight,\n       height: metric.height,\n       chest: metric.chest || '',\n       waist: metric.waist || '',\n       hips: metric.hips || '',\n       arms: metric.arms || '',\n       thighs: metric.thighs || '',\n       body_fat: metric.body_fat || ''\n     });\n     \n     const handleChange = (e) => {\n       setFormData({\n         ...formData,\n         [e.target.name]: e.target.value\n       });\n     };\n     \n     const handleSubmit = (e) => {\n       e.preventDefault();\n       onSave(metric.id, formData);\n       onClose();\n     };\n     \n     return (\n       <Modal isOpen={isOpen} onClose={onClose}>\n         <h2>Editar Métrica Corporal</h2>\n         <form onSubmit={handleSubmit}>\n           <div className=\"form-group\">\n             <label>Fecha</label>\n             <input \n               type=\"date\" \n               name=\"date\" \n               value={formData.date} \n               onChange={handleChange} \n               required \n             />\n           </div>\n           <div className=\"form-group\">\n             <label>Peso (kg)</label>\n             <input \n               type=\"number\" \n               name=\"weight\" \n               value={formData.weight} \n               onChange={handleChange} \n               step=\"0.1\" \n               required \n             />\n           </div>\n           {/* Añadir campos similares para otras métricas */}\n           <div className=\"modal-actions\">\n             <button type=\"button\" onClick={onClose}>Cancelar</button>\n             <button type=\"submit\">Guardar Cambios</button>\n           </div>\n         </form>\n       </Modal>\n     );\n   }\n   ```\n\n3. Implementar funciones para comunicarse con la API:\n   ```javascript\n   // Función para actualizar una métrica\n   async function updateBodyMetric(metricId, data) {\n     try {\n       const response = await fetch(`/api/body-metrics/${metricId}`, {\n         method: 'PUT',\n         headers: {\n           'Content-Type': 'application/json',\n         },\n         body: JSON.stringify(data)\n       });\n       \n       if (!response.ok) {\n         throw new Error('Error al actualizar la métrica');\n       }\n       \n       return await response.json();\n     } catch (error) {\n       console.error('Error:', error);\n       throw error;\n     }\n   }\n   \n   // Función para eliminar una métrica\n   async function deleteBodyMetric(metricId) {\n     try {\n       const response = await fetch(`/api/body-metrics/${metricId}`, {\n         method: 'DELETE',\n       });\n       \n       if (!response.ok) {\n         throw new Error('Error al eliminar la métrica');\n       }\n       \n       return await response.json();\n     } catch (error) {\n       console.error('Error:', error);\n       throw error;\n     }\n   }\n   ```\n\n4. Actualizar la visualización del historial para incluir opciones de edición y eliminación:\n   ```javascript\n   function BodyMetricsHistory({ metrics, onEdit, onDelete, onRefresh }) {\n     return (\n       <div className=\"metrics-history\">\n         <h2>Historial de Métricas Corporales</h2>\n         <table>\n           <thead>\n             <tr>\n               <th>Fecha</th>\n               <th>Peso (kg)</th>\n               <th>Altura (cm)</th>\n               <th>IMC</th>\n               {/* Columnas adicionales para métricas extendidas */}\n               <th>Acciones</th>\n             </tr>\n           </thead>\n           <tbody>\n             {metrics.map(metric => (\n               <tr key={metric.id}>\n                 <td>{new Date(metric.date).toLocaleDateString()}</td>\n                 <td>{metric.weight}</td>\n                 <td>{metric.height}</td>\n                 <td>{calculateBMI(metric.weight, metric.height)}</td>\n                 {/* Celdas adicionales para métricas extendidas */}\n                 <td>\n                   <button onClick={() => onEdit(metric)}>Editar</button>\n                   <button onClick={() => {\n                     if (window.confirm('¿Estás seguro de que deseas eliminar esta métrica?')) {\n                       onDelete(metric.id).then(onRefresh);\n                     }\n                   }}>Eliminar</button>\n                 </td>\n               </tr>\n             ))}\n           </tbody>\n         </table>\n       </div>\n     );\n   }\n   ```\n\n5. Actualizar los gráficos de progreso para reflejar los cambios después de ediciones o eliminaciones:\n   - Implementar una función de recarga de datos después de cada operación\n   - Asegurar que los gráficos se actualicen correctamente cuando cambian los datos\n\n6. Consideraciones de seguridad:\n   - Validar todos los datos de entrada en el servidor\n   - Verificar que el usuario solo pueda modificar o eliminar sus propias métricas\n   - Implementar protección CSRF para las operaciones de modificación",
+        "testStrategy": "1. Pruebas unitarias:\n   - Verificar que la API de actualización modifica correctamente todos los campos de las métricas corporales\n   - Comprobar que la API de eliminación elimina correctamente la métrica seleccionada\n   - Verificar que los permisos funcionan (usuarios no pueden modificar métricas de otros usuarios)\n   - Probar la validación de datos en el servidor\n\n2. Pruebas de integración:\n   - Comprobar que la edición de una métrica actualiza correctamente la base de datos\n   - Verificar que la eliminación de una métrica la remueve de la base de datos\n   - Probar que los cambios se reflejan inmediatamente en la interfaz de usuario\n   - Verificar que los gráficos de progreso se actualizan correctamente después de editar o eliminar métricas\n\n3. Pruebas de interfaz de usuario:\n   - Verificar que los botones de edición y eliminación aparecen correctamente en el historial\n   - Comprobar que el formulario de edición se carga con los valores actuales de la métrica\n   - Probar que el diálogo de confirmación aparece antes de eliminar una métrica\n   - Verificar que los mensajes de éxito/error se muestran correctamente\n   - Comprobar la experiencia de usuario en diferentes dispositivos (responsive)\n\n4. Pruebas de casos límite:\n   - Probar la edición con valores extremos (muy altos o muy bajos)\n   - Verificar el comportamiento al intentar eliminar una métrica que está siendo utilizada en cálculos de metas\n   - Comprobar el rendimiento con un historial extenso de métricas\n\n5. Pruebas de regresión:\n   - Verificar que las funcionalidades existentes del módulo de métricas corporales siguen funcionando correctamente\n   - Comprobar que los cálculos de IMC y otras estadísticas se actualizan correctamente después de editar métricas",
+        "status": "done",
+        "dependencies": [
+          4,
+          9
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implementación de Edición y Eliminación de Comidas",
+        "description": "Desarrollar funcionalidad para que los usuarios puedan modificar y eliminar comidas desde el historial de comidas en el módulo de nutrición.",
+        "details": "1. Extender la API REST para soportar operaciones de actualización y eliminación de comidas:\n   ```python\n   @app.route('/api/meals/<int:meal_id>', methods=['PUT'])\n   @login_required\n   def update_meal(meal_id):\n       meal = Meal.query.get_or_404(meal_id)\n       data = request.get_json()\n       \n       # Verificar permisos (si la comida pertenece al usuario)\n       if meal.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Actualizar campos básicos\n       meal.name = data.get('name', meal.name)\n       meal.meal_time = data.get('meal_time', meal.meal_time)\n       meal.date = data.get('date', meal.date)\n       \n       # Actualizar alimentos asociados\n       if 'food_items' in data:\n           # Eliminar items existentes\n           MealFood.query.filter_by(meal_id=meal.id).delete()\n           \n           # Crear nuevos items\n           for item in data['food_items']:\n               meal_food = MealFood(\n                   meal_id=meal.id,\n                   food_id=item['food_id'],\n                   quantity=item['quantity']\n               )\n               db.session.add(meal_food)\n       \n       db.session.commit()\n       return jsonify({'message': 'Comida actualizada correctamente'})\n   \n   @app.route('/api/meals/<int:meal_id>', methods=['DELETE'])\n   @login_required\n   def delete_meal(meal_id):\n       meal = Meal.query.get_or_404(meal_id)\n       \n       # Verificar permisos\n       if meal.user_id != current_user.id:\n           return jsonify({'error': 'No autorizado'}), 403\n       \n       # Eliminar registros relacionados\n       MealFood.query.filter_by(meal_id=meal.id).delete()\n       \n       # Eliminar la comida\n       db.session.delete(meal)\n       db.session.commit()\n       \n       return jsonify({'message': 'Comida eliminada correctamente'})\n   ```\n\n2. Implementar componentes de interfaz de usuario para edición y eliminación:\n   - Añadir botones de edición y eliminación en las tarjetas de comidas del historial\n   - Crear un modal de confirmación para la eliminación\n   - Desarrollar un formulario de edición que permita:\n     - Modificar nombre y hora de la comida\n     - Añadir/eliminar alimentos\n     - Ajustar cantidades de alimentos\n\n3. Actualizar el componente de historial de comidas para reflejar los cambios:\n   ```javascript\n   // Ejemplo de código para el componente de historial\n   function MealHistoryItem({ meal, onEdit, onDelete }) {\n     return (\n       <div className=\"meal-card\">\n         <div className=\"meal-header\">\n           <h3>{meal.name}</h3>\n           <span>{formatDate(meal.date)} - {formatTime(meal.meal_time)}</span>\n           <div className=\"meal-actions\">\n             <button onClick={() => onEdit(meal)} className=\"btn-edit\">\n               <i className=\"fas fa-edit\"></i>\n             </button>\n             <button onClick={() => onDelete(meal.id)} className=\"btn-delete\">\n               <i className=\"fas fa-trash\"></i>\n             </button>\n           </div>\n         </div>\n         <div className=\"meal-content\">\n           {meal.food_items.map(item => (\n             <div key={item.id} className=\"food-item\">\n               <span>{item.food.name}</span>\n               <span>{item.quantity} {item.food.serving_unit}</span>\n             </div>\n           ))}\n         </div>\n         <div className=\"meal-summary\">\n           <div>Calorías: {calculateTotalCalories(meal)} kcal</div>\n           <div>Proteínas: {calculateTotalProtein(meal)}g</div>\n           <div>Carbohidratos: {calculateTotalCarbs(meal)}g</div>\n           <div>Grasas: {calculateTotalFat(meal)}g</div>\n         </div>\n       </div>\n     );\n   }\n   ```\n\n4. Implementar formulario de edición de comidas:\n   ```javascript\n   function EditMealForm({ meal, onSave, onCancel }) {\n     const [formData, setFormData] = useState({\n       name: meal.name,\n       date: meal.date,\n       meal_time: meal.meal_time,\n       food_items: [...meal.food_items]\n     });\n     \n     // Lógica para añadir/eliminar alimentos\n     const addFoodItem = (food) => {\n       setFormData({\n         ...formData,\n         food_items: [...formData.food_items, { food_id: food.id, quantity: 1, food }]\n       });\n     };\n     \n     const removeFoodItem = (index) => {\n       const updatedItems = [...formData.food_items];\n       updatedItems.splice(index, 1);\n       setFormData({\n         ...formData,\n         food_items: updatedItems\n       });\n     };\n     \n     const updateQuantity = (index, quantity) => {\n       const updatedItems = [...formData.food_items];\n       updatedItems[index].quantity = quantity;\n       setFormData({\n         ...formData,\n         food_items: updatedItems\n       });\n     };\n     \n     const handleSubmit = (e) => {\n       e.preventDefault();\n       onSave(meal.id, formData);\n     };\n     \n     return (\n       <form onSubmit={handleSubmit}>\n         {/* Campos del formulario */}\n         <div className=\"form-group\">\n           <label>Nombre:</label>\n           <input \n             type=\"text\" \n             value={formData.name} \n             onChange={(e) => setFormData({...formData, name: e.target.value})}\n             required\n           />\n         </div>\n         \n         <div className=\"form-group\">\n           <label>Fecha:</label>\n           <input \n             type=\"date\" \n             value={formData.date} \n             onChange={(e) => setFormData({...formData, date: e.target.value})}\n             required\n           />\n         </div>\n         \n         <div className=\"form-group\">\n           <label>Hora:</label>\n           <input \n             type=\"time\" \n             value={formData.meal_time} \n             onChange={(e) => setFormData({...formData, meal_time: e.target.value})}\n             required\n           />\n         </div>\n         \n         <div className=\"food-items-section\">\n           <h4>Alimentos</h4>\n           {formData.food_items.map((item, index) => (\n             <div key={index} className=\"food-item-row\">\n               <span>{item.food.name}</span>\n               <input \n                 type=\"number\" \n                 min=\"0.1\" \n                 step=\"0.1\" \n                 value={item.quantity} \n                 onChange={(e) => updateQuantity(index, parseFloat(e.target.value))}\n               />\n               <span>{item.food.serving_unit}</span>\n               <button type=\"button\" onClick={() => removeFoodItem(index)}>\n                 <i className=\"fas fa-times\"></i>\n               </button>\n             </div>\n           ))}\n           <FoodSearchComponent onFoodSelect={addFoodItem} />\n         </div>\n         \n         <div className=\"form-actions\">\n           <button type=\"submit\" className=\"btn-save\">Guardar cambios</button>\n           <button type=\"button\" onClick={onCancel} className=\"btn-cancel\">Cancelar</button>\n         </div>\n       </form>\n     );\n   }\n   ```\n\n5. Implementar modal de confirmación para eliminación:\n   ```javascript\n   function DeleteConfirmationModal({ mealId, mealName, onConfirm, onCancel }) {\n     return (\n       <div className=\"modal-overlay\">\n         <div className=\"modal-content\">\n           <h3>Confirmar eliminación</h3>\n           <p>¿Estás seguro de que deseas eliminar la comida \"{mealName}\"?</p>\n           <p className=\"warning\">Esta acción no se puede deshacer.</p>\n           \n           <div className=\"modal-actions\">\n             <button \n               onClick={() => onConfirm(mealId)} \n               className=\"btn-delete-confirm\"\n             >\n               Eliminar\n             </button>\n             <button \n               onClick={onCancel} \n               className=\"btn-cancel\"\n             >\n               Cancelar\n             </button>\n           </div>\n         </div>\n       </div>\n     );\n   }\n   ```\n\n6. Actualizar los cálculos de nutrición diaria después de editar o eliminar comidas:\n   - Asegurar que los totales diarios se recalculen correctamente\n   - Actualizar gráficos y visualizaciones de datos nutricionales\n   - Reflejar los cambios en el seguimiento de metas relacionadas con la nutrición",
+        "testStrategy": "1. Pruebas unitarias:\n   - Verificar que la API de actualización modifica correctamente todos los campos de las comidas\n   - Comprobar que la API de eliminación elimina correctamente la comida y todos sus registros relacionados\n   - Verificar que los permisos funcionan (usuarios no pueden modificar comidas de otros usuarios)\n   - Probar la validación de datos en las operaciones de actualización\n\n2. Pruebas de integración:\n   - Comprobar que la edición de comidas actualiza correctamente los cálculos de macronutrientes y calorías diarias\n   - Verificar que la eliminación de comidas actualiza los totales diarios\n   - Probar la integración con el sistema de metas (si una meta depende de la ingesta calórica, debe actualizarse)\n   - Comprobar que los gráficos y visualizaciones se actualizan correctamente\n\n3. Pruebas de interfaz de usuario:\n   - Verificar que los botones de edición y eliminación aparecen correctamente en el historial de comidas\n   - Comprobar que el formulario de edición muestra los datos actuales de la comida\n   - Probar la adición y eliminación de alimentos en el formulario de edición\n   - Verificar que el modal de confirmación de eliminación funciona correctamente\n   - Comprobar la experiencia de usuario en dispositivos móviles y escritorio\n\n4. Pruebas de casos límite:\n   - Probar la edición de comidas con muchos alimentos (>20)\n   - Verificar el comportamiento al editar comidas antiguas (>6 meses)\n   - Comprobar el manejo de errores cuando la base de datos no está disponible\n   - Probar la edición simultánea desde múltiples dispositivos\n\n5. Pruebas de regresión:\n   - Verificar que las funcionalidades existentes del módulo de nutrición siguen funcionando correctamente\n   - Comprobar que el historial de comidas muestra correctamente todas las entradas\n   - Verificar que los cálculos de nutrición siguen siendo precisos",
+        "status": "done",
+        "dependencies": [
+          5,
+          8
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Mejoras Visuales y Validaciones en Formularios",
+        "description": "Implementar mejoras visuales y validaciones en todos los formularios de la aplicación, incluyendo tooltips informativos, mensajes de error claros y feedback visual consistente para mejorar la experiencia de usuario.",
+        "details": "1. Implementar validaciones del lado del cliente para todos los formularios:\n   ```javascript\n   // Ejemplo de validación para formularios\n   function validateForm(formElement) {\n     const inputs = formElement.querySelectorAll('input, select, textarea');\n     let isValid = true;\n     \n     inputs.forEach(input => {\n       const validationMessage = validateInput(input);\n       if (validationMessage) {\n         showError(input, validationMessage);\n         isValid = false;\n       } else {\n         clearError(input);\n       }\n     });\n     \n     return isValid;\n   }\n   ```\n\n2. Añadir tooltips informativos a campos de formulario:\n   ```html\n   <div class=\"form-group\">\n     <label for=\"weight\">Peso (kg)</label>\n     <input type=\"number\" id=\"weight\" name=\"weight\" \n            data-tooltip=\"Ingrese su peso actual en kilogramos\">\n     <div class=\"tooltip\">Ingrese su peso actual en kilogramos</div>\n   </div>\n   ```\n\n3. Implementar feedback visual consistente:\n   - Indicadores de carga durante envío de formularios\n   - Animaciones sutiles para transiciones\n   - Códigos de color consistentes (verde para éxito, rojo para error)\n   - Iconos intuitivos para diferentes tipos de mensajes\n\n4. Crear componente reutilizable para mensajes de error:\n   ```javascript\n   function showError(inputElement, message) {\n     const errorDiv = document.createElement('div');\n     errorDiv.className = 'error-message';\n     errorDiv.textContent = message;\n     \n     const parent = inputElement.parentElement;\n     parent.classList.add('has-error');\n     \n     // Eliminar mensaje de error existente si hay\n     const existingError = parent.querySelector('.error-message');\n     if (existingError) {\n       parent.removeChild(existingError);\n     }\n     \n     parent.appendChild(errorDiv);\n   }\n   ```\n\n5. Implementar validaciones específicas para cada módulo:\n   - Módulo de Entrenamiento: validar duración, intensidad, etc.\n   - Módulo de Nutrición: validar valores nutricionales, porciones, etc.\n   - Módulo de Métricas: validar rangos realistas para medidas corporales\n\n6. Añadir CSS para estilos de validación:\n   ```css\n   .form-group {\n     position: relative;\n     margin-bottom: 1.5rem;\n   }\n   \n   .form-group.has-error input {\n     border-color: #dc3545;\n   }\n   \n   .error-message {\n     color: #dc3545;\n     font-size: 0.85rem;\n     margin-top: 0.25rem;\n   }\n   \n   .tooltip {\n     display: none;\n     position: absolute;\n     background: #333;\n     color: white;\n     padding: 5px 10px;\n     border-radius: 4px;\n     z-index: 100;\n   }\n   \n   input:focus + .tooltip, \n   input:hover + .tooltip {\n     display: block;\n   }\n   ```\n\n7. Implementar validaciones del lado del servidor:\n   ```python\n   def validate_body_metrics(data):\n       errors = {}\n       \n       # Validar peso (entre 20kg y 300kg)\n       if 'weight' in data:\n           try:\n               weight = float(data['weight'])\n               if weight < 20 or weight > 300:\n                   errors['weight'] = \"El peso debe estar entre 20kg y 300kg\"\n           except ValueError:\n               errors['weight'] = \"El peso debe ser un número válido\"\n       \n       # Validar altura (entre 100cm y 250cm)\n       if 'height' in data:\n           try:\n               height = float(data['height'])\n               if height < 100 or height > 250:\n                   errors['height'] = \"La altura debe estar entre 100cm y 250cm\"\n           except ValueError:\n               errors['height'] = \"La altura debe ser un número válido\"\n       \n       return errors\n   ```\n\n8. Crear sistema de notificaciones para feedback de acciones:\n   ```javascript\n   function showNotification(message, type = 'info') {\n     const notification = document.createElement('div');\n     notification.className = `notification ${type}`;\n     notification.textContent = message;\n     \n     document.body.appendChild(notification);\n     \n     // Mostrar con animación\n     setTimeout(() => {\n       notification.classList.add('show');\n     }, 10);\n     \n     // Ocultar después de 3 segundos\n     setTimeout(() => {\n       notification.classList.remove('show');\n       setTimeout(() => {\n         document.body.removeChild(notification);\n       }, 300);\n     }, 3000);\n   }\n   ```",
+        "testStrategy": "1. Pruebas de validación de formularios:\n   - Verificar que todos los formularios validan correctamente los datos antes de enviar\n   - Comprobar que se muestran mensajes de error apropiados para cada tipo de validación\n   - Verificar que los formularios no se envían si hay errores de validación\n   - Probar casos límite (valores mínimos/máximos, formatos especiales)\n\n2. Pruebas de accesibilidad:\n   - Verificar que los tooltips son accesibles mediante teclado\n   - Comprobar que los mensajes de error son anunciados por lectores de pantalla\n   - Verificar que el contraste de colores cumple con WCAG 2.1 AA\n   - Probar la navegación por teclado en todos los formularios\n\n3. Pruebas de usabilidad:\n   - Realizar pruebas con usuarios para evaluar la claridad de los mensajes\n   - Verificar que los tooltips aparecen en el momento adecuado y no obstruyen otros elementos\n   - Comprobar que el feedback visual es consistente en toda la aplicación\n   - Evaluar la experiencia de usuario al completar formularios largos\n\n4. Pruebas de compatibilidad:\n   - Verificar el funcionamiento en diferentes navegadores (Chrome, Firefox, Safari, Edge)\n   - Comprobar la visualización en diferentes tamaños de pantalla (responsive)\n   - Verificar el comportamiento en dispositivos táctiles\n\n5. Pruebas de integración:\n   - Comprobar que las validaciones del cliente y servidor están sincronizadas\n   - Verificar que los mensajes de error del servidor se muestran correctamente en la interfaz\n   - Probar el comportamiento de los formularios cuando hay errores de red\n\n6. Pruebas de rendimiento:\n   - Medir el tiempo de respuesta de las validaciones en tiempo real\n   - Verificar que las animaciones y efectos visuales no afectan el rendimiento\n   - Comprobar el comportamiento con conexiones lentas",
+        "status": "done",
+        "dependencies": [
+          7,
+          8,
+          9,
+          11,
+          12,
+          13,
+          14
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Implementación de Filtros y Búsqueda en Historiales",
+        "description": "Desarrollar funcionalidades de filtrado y búsqueda en los historiales de entrenamientos, comidas y métricas corporales para facilitar la navegación y análisis de datos por parte del usuario.",
+        "details": "1. Implementar componente de búsqueda reutilizable:\n   ```javascript\n   // Componente de búsqueda genérico\n   class SearchComponent {\n     constructor(containerId, dataSource, searchFields) {\n       this.container = document.getElementById(containerId);\n       this.dataSource = dataSource;\n       this.searchFields = searchFields;\n       this.initializeUI();\n     }\n     \n     initializeUI() {\n       // Crear campo de búsqueda\n       const searchInput = document.createElement('input');\n       searchInput.type = 'text';\n       searchInput.placeholder = 'Buscar...';\n       searchInput.addEventListener('input', this.handleSearch.bind(this));\n       this.container.appendChild(searchInput);\n     }\n     \n     handleSearch(event) {\n       const query = event.target.value.toLowerCase();\n       // Lógica de filtrado\n     }\n   }\n   ```\n\n2. Implementar filtros específicos para cada módulo:\n   \n   a) Filtros para entrenamientos:\n   ```html\n   <div class=\"filters-container\">\n     <div class=\"filter-group\">\n       <label>Fecha</label>\n       <input type=\"date\" id=\"date-from\" class=\"filter-date\">\n       <input type=\"date\" id=\"date-to\" class=\"filter-date\">\n     </div>\n     <div class=\"filter-group\">\n       <label>Tipo de entrenamiento</label>\n       <select id=\"workout-type\" class=\"filter-select\">\n         <option value=\"\">Todos</option>\n         <option value=\"strength\">Fuerza</option>\n         <option value=\"cardio\">Cardio</option>\n         <option value=\"flexibility\">Flexibilidad</option>\n       </select>\n     </div>\n     <div class=\"filter-group\">\n       <label>Duración</label>\n       <select id=\"duration-filter\" class=\"filter-select\">\n         <option value=\"\">Cualquiera</option>\n         <option value=\"short\">Corta (< 30 min)</option>\n         <option value=\"medium\">Media (30-60 min)</option>\n         <option value=\"long\">Larga (> 60 min)</option>\n       </select>\n     </div>\n     <button id=\"apply-filters\" class=\"btn-primary\">Aplicar filtros</button>\n     <button id=\"reset-filters\" class=\"btn-secondary\">Restablecer</button>\n   </div>\n   ```\n   \n   b) Filtros para comidas:\n   ```html\n   <div class=\"filters-container\">\n     <div class=\"filter-group\">\n       <label>Fecha</label>\n       <input type=\"date\" id=\"meal-date-from\" class=\"filter-date\">\n       <input type=\"date\" id=\"meal-date-to\" class=\"filter-date\">\n     </div>\n     <div class=\"filter-group\">\n       <label>Tipo de comida</label>\n       <select id=\"meal-type\" class=\"filter-select\">\n         <option value=\"\">Todos</option>\n         <option value=\"breakfast\">Desayuno</option>\n         <option value=\"lunch\">Almuerzo</option>\n         <option value=\"dinner\">Cena</option>\n         <option value=\"snack\">Merienda</option>\n       </select>\n     </div>\n     <div class=\"filter-group\">\n       <label>Calorías</label>\n       <input type=\"range\" id=\"calories-range\" min=\"0\" max=\"2000\" step=\"100\">\n       <span id=\"calories-value\">0-2000 kcal</span>\n     </div>\n     <button id=\"apply-meal-filters\" class=\"btn-primary\">Aplicar filtros</button>\n     <button id=\"reset-meal-filters\" class=\"btn-secondary\">Restablecer</button>\n   </div>\n   ```\n   \n   c) Filtros para métricas corporales:\n   ```html\n   <div class=\"filters-container\">\n     <div class=\"filter-group\">\n       <label>Período</label>\n       <input type=\"date\" id=\"metrics-date-from\" class=\"filter-date\">\n       <input type=\"date\" id=\"metrics-date-to\" class=\"filter-date\">\n     </div>\n     <div class=\"filter-group\">\n       <label>Métrica</label>\n       <select id=\"metric-type\" class=\"filter-select\" multiple>\n         <option value=\"weight\">Peso</option>\n         <option value=\"bmi\">IMC</option>\n         <option value=\"body_fat\">Grasa corporal</option>\n         <option value=\"chest\">Pecho</option>\n         <option value=\"waist\">Cintura</option>\n         <option value=\"hips\">Cadera</option>\n       </select>\n     </div>\n     <button id=\"apply-metric-filters\" class=\"btn-primary\">Aplicar filtros</button>\n     <button id=\"reset-metric-filters\" class=\"btn-secondary\">Restablecer</button>\n   </div>\n   ```\n\n3. Implementar lógica de filtrado en el backend:\n   ```python\n   @app.route('/api/workouts/filter', methods=['GET'])\n   @login_required\n   def filter_workouts():\n       # Obtener parámetros de filtro\n       date_from = request.args.get('date_from')\n       date_to = request.args.get('date_to')\n       workout_type = request.args.get('type')\n       duration_filter = request.args.get('duration')\n       search_query = request.args.get('query')\n       \n       # Construir consulta base\n       query = Workout.query.filter_by(user_id=current_user.id)\n       \n       # Aplicar filtros\n       if date_from:\n           query = query.filter(Workout.date >= date_from)\n       if date_to:\n           query = query.filter(Workout.date <= date_to)\n       if workout_type:\n           query = query.filter(Workout.type == workout_type)\n       if duration_filter:\n           if duration_filter == 'short':\n               query = query.filter(Workout.duration < 30)\n           elif duration_filter == 'medium':\n               query = query.filter(Workout.duration.between(30, 60))\n           elif duration_filter == 'long':\n               query = query.filter(Workout.duration > 60)\n       if search_query:\n           query = query.filter(Workout.name.ilike(f'%{search_query}%'))\n       \n       # Ordenar por fecha descendente\n       workouts = query.order_by(Workout.date.desc()).all()\n       \n       return jsonify([workout.to_dict() for workout in workouts])\n   ```\n\n   Implementar endpoints similares para comidas y métricas corporales.\n\n4. Implementar lógica de filtrado en el frontend:\n   ```javascript\n   // Ejemplo para el módulo de entrenamientos\n   document.getElementById('apply-filters').addEventListener('click', function() {\n     const dateFrom = document.getElementById('date-from').value;\n     const dateTo = document.getElementById('date-to').value;\n     const workoutType = document.getElementById('workout-type').value;\n     const durationFilter = document.getElementById('duration-filter').value;\n     const searchQuery = document.querySelector('.search-input').value;\n     \n     // Construir URL con parámetros\n     const params = new URLSearchParams();\n     if (dateFrom) params.append('date_from', dateFrom);\n     if (dateTo) params.append('date_to', dateTo);\n     if (workoutType) params.append('type', workoutType);\n     if (durationFilter) params.append('duration', durationFilter);\n     if (searchQuery) params.append('query', searchQuery);\n     \n     // Realizar petición\n     fetch(`/api/workouts/filter?${params.toString()}`)\n       .then(response => response.json())\n       .then(data => {\n         // Actualizar la vista con los resultados filtrados\n         updateWorkoutsList(data);\n       })\n       .catch(error => console.error('Error al filtrar entrenamientos:', error));\n   });\n   ```\n\n5. Implementar persistencia de filtros:\n   ```javascript\n   // Guardar filtros en localStorage\n   function saveFilters(moduleType) {\n     const filters = {};\n     \n     if (moduleType === 'workouts') {\n       filters.dateFrom = document.getElementById('date-from').value;\n       filters.dateTo = document.getElementById('date-to').value;\n       filters.workoutType = document.getElementById('workout-type').value;\n       filters.duration = document.getElementById('duration-filter').value;\n     } else if (moduleType === 'meals') {\n       // Obtener filtros de comidas\n     } else if (moduleType === 'metrics') {\n       // Obtener filtros de métricas\n     }\n     \n     localStorage.setItem(`${moduleType}_filters`, JSON.stringify(filters));\n   }\n   \n   // Cargar filtros guardados\n   function loadSavedFilters(moduleType) {\n     const savedFilters = localStorage.getItem(`${moduleType}_filters`);\n     if (savedFilters) {\n       const filters = JSON.parse(savedFilters);\n       // Aplicar filtros a la interfaz\n     }\n   }\n   ```\n\n6. Implementar exportación de datos filtrados:\n   ```javascript\n   function exportFilteredData(data, format) {\n     if (format === 'csv') {\n       // Convertir datos a CSV\n       const csv = convertToCSV(data);\n       // Crear blob y descargar\n       const blob = new Blob([csv], { type: 'text/csv' });\n       const url = URL.createObjectURL(blob);\n       const a = document.createElement('a');\n       a.href = url;\n       a.download = 'datos_filtrados.csv';\n       a.click();\n     } else if (format === 'pdf') {\n       // Generar PDF con datos filtrados\n     }\n   }\n   ```",
+        "testStrategy": "1. Pruebas unitarias de componentes de filtrado:\n   - Verificar que cada componente de filtro funciona correctamente de forma aislada\n   - Comprobar que los rangos de fechas funcionan correctamente\n   - Verificar que los filtros de selección múltiple funcionan adecuadamente\n   - Comprobar que la búsqueda por texto funciona con diferentes patrones\n\n2. Pruebas de integración de filtros:\n   - Verificar que la combinación de múltiples filtros produce los resultados esperados\n   - Comprobar que los filtros funcionan correctamente con conjuntos de datos grandes\n   - Verificar que los filtros se aplican correctamente en todos los módulos (entrenamientos, comidas, métricas)\n   - Comprobar la persistencia de filtros entre sesiones\n\n3. Pruebas de rendimiento:\n   - Medir el tiempo de respuesta al aplicar filtros complejos\n   - Verificar que la aplicación mantiene un rendimiento aceptable con grandes conjuntos de datos\n   - Comprobar que la paginación funciona correctamente con resultados filtrados\n\n4. Pruebas de usabilidad:\n   - Verificar que la interfaz de filtros es intuitiva y fácil de usar\n   - Comprobar que los filtros aplicados son visibles para el usuario\n   - Verificar que el botón de restablecer filtros funciona correctamente\n   - Comprobar que los resultados filtrados se muestran de forma clara\n\n5. Pruebas específicas por módulo:\n   a) Módulo de entrenamientos:\n      - Verificar filtrado por tipo de entrenamiento\n      - Comprobar filtrado por duración\n      - Verificar búsqueda por nombre de ejercicio\n\n   b) Módulo de comidas:\n      - Verificar filtrado por tipo de comida\n      - Comprobar filtrado por rango de calorías\n      - Verificar búsqueda por nombre de alimento\n\n   c) Módulo de métricas corporales:\n      - Verificar filtrado por tipo de métrica\n      - Comprobar filtrado por rango de valores\n      - Verificar visualización de gráficos con datos filtrados\n\n6. Pruebas de exportación:\n   - Verificar que los datos filtrados se exportan correctamente en formato CSV\n   - Comprobar que los datos filtrados se exportan correctamente en formato PDF\n   - Verificar que la exportación incluye solo los datos filtrados actualmente",
+        "status": "done",
+        "dependencies": [
+          12,
+          13,
+          14
+        ],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-23T16:42:33.720Z",
+      "updated": "2025-07-23T22:02:40.886Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
