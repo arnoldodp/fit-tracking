@@ -41,4 +41,12 @@ __pycache__/
 .taskmaster/
 
 # Claude
-.claude/
+claude/
+.claude.md
+
+# MCP
+.mcp.json   
+
+
+#prd
+scripts/
