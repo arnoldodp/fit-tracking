@@ -42,11 +42,16 @@ __pycache__/
 
 # Claude
 .claude/
-.claude.md
+CLAUDE.md
 
 # MCP
 .mcp.json   
 
 
-#prd
-scripts/
+#carpetas
+.scripts/
+alembic/
+alembic.ini
+
+
+
