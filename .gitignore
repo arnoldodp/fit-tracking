@@ -49,8 +49,8 @@ CLAUDE.md
 
 
 #carpetas
-.scripts/
-alembic/
+scripts/
+
 alembic.ini
 
 
