@@ -32,6 +32,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Establecer la URL de la base de datos desde las variables de entorno
+if SQLALCHEMY_DATABASE_URL.startswith("postgresql://"):
+    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
 config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
 
 # add your model's MetaData object here
