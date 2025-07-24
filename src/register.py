@@ -40,14 +40,14 @@ def register_page():
                     if register_user(username, email, full_name, password):
                         st.success("¡Registro exitoso! Ahora puedes iniciar sesión.")
                         st.session_state.page = "login"
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error("Ocurrió un error al registrar el usuario. Intenta de nuevo.")
     # Enlace para inicio de sesión
     st.info("¿Ya tienes una cuenta?")
     if st.button("Iniciar Sesión"):
         st.session_state.page = "login"
-        st.experimental_rerun()
+        st.rerun()
 
 def register_user(username: str, email: str, full_name: str, password: str) -> bool:
     db = SessionLocal()
