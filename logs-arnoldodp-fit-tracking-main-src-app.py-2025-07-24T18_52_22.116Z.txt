@@ -1,0 +1,197 @@
+
+[     UTC     ] Logs for fit-tracking-em6zzj9um7duapwxwmfxaw.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[18:51:27] 🖥 Provisioning machine...
+[18:51:27] 🎛 Preparing system...
+[18:51:27] ⛓ Spinning up manager process...
+[18:51:30] 🚀 Starting up repository: 'fit-tracking', branch: 'main', main module: 'src/app.py'
+[18:51:30] 🐙 Cloning repository...
+[18:51:30] 🐙 Cloning into '/mount/src/fit-tracking'...
+
+[18:51:30] 🐙 Cloned repository!
+[18:51:30] 🐙 Pulling code changes from Github...
+[18:51:31] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+Using Python 3.13.5 environment at /home/adminuser/venv[2025-07-24 18:51:31.500120] 
+Resolved [2025-07-24 18:51:32.073133] 57 packages in 571ms
+  × Failed to download and build `psycopg2-binary==2.9.9`
+  ╰─▶ Build backend failed to determine requirements with `build_wheel()`
+      (exit status: 1)
+
+      [stdout]
+      running egg_info
+      writing psycopg2_binary.egg-info/PKG-INFO
+      writing dependency_links to psycopg2_binary.egg-info/dependency_links.txt
+      writing top-level names to psycopg2_binary.egg-info/top_level.txt
+
+      [stderr]
+      /home/adminuser/.cache/uv/builds-v0/.tmpXq2x41/lib/python3.13/site-packages/setuptools/dist.py:759:
+      SetuptoolsDeprecationWarning: License classifiers are deprecated.
+      !!
+
+      
+      ********************************************************************************
+              Please consider removing the following classifiers in favor of a
+      SPDX license expression:
+
+              License :: OSI Approved :: GNU Library or Lesser General Public
+      License (LGPL)
+
+              See
+      https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license
+      for details.
+      
+      ********************************************************************************
+
+      !!
+        self._finalize_license_expression()
+
+      Error: pg_config executable not found.
+
+      pg_config is required to build psycopg2 from source.  Please add the
+      directory
+      containing pg_config to the $PATH or specify the full executable path
+      with the
+      option:
+
+          python setup.py build_ext --pg-config /path/to/pg_config build ...
+
+      or with the pg_config option in 'setup.cfg'.
+
+      If you prefer to avoid building psycopg2 from source, please install
+      the PyPI
+      'psycopg2-binary' package instead.
+
+      For further information please check the 'doc/src/install.rst' file
+      (also at
+      <https://www.psycopg.org/docs/install.html>).
+
+
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using uv pip install.
+Using Python 3.13.5 environment at /home/adminuser/venv
+Resolved 4 packages in 40ms
+Prepared [2025-07-24 18:51:34.748144] 1 package[2025-07-24 18:51:34.748492]  [2025-07-24 18:51:34.748865] in 49ms[2025-07-24 18:51:34.749260] 
+Installed [2025-07-24 18:51:34.775045] 4 packages[2025-07-24 18:51:34.775315]  [2025-07-24 18:51:34.775544] in 25ms[2025-07-24 18:51:34.775721] 
+ [2025-07-24 18:51:34.776312] +[2025-07-24 18:51:34.776536]  [2025-07-24 18:51:34.776741] markdown-it-py[2025-07-24 18:51:34.777070] ==[2025-07-24 18:51:34.777394] 3.0.0[2025-07-24 18:51:34.777750] 
+ [2025-07-24 18:51:34.778479] +[2025-07-24 18:51:34.778796]  [2025-07-24 18:51:34.779474] mdurl[2025-07-24 18:51:34.779806] ==[2025-07-24 18:51:34.780176] 0.1.2[2025-07-24 18:51:34.780452] 
+ [2025-07-24 18:51:34.781129] +[2025-07-24 18:51:34.781424]  [2025-07-24 18:51:34.781720] pygments[2025-07-24 18:51:34.782009] ==[2025-07-24 18:51:34.782307] 2.19.2[2025-07-24 18:51:34.782621] 
+ [2025-07-24 18:51:34.783252] +[2025-07-24 18:51:34.784172]  rich==14.0.0
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting streamlit==1.32.0 (from -r /mount/src/fit-tracking/requirements.txt (line 1))
+  Downloading streamlit-1.32.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting sqlalchemy==2.0.27 (from -r /mount/src/fit-tracking/requirements.txt (line 2))
+  Downloading SQLAlchemy-2.0.27-py3-none-any.whl.metadata (9.6 kB)
+Collecting psycopg2-binary==2.9.9 (from -r /mount/src/fit-tracking/requirements.txt (line 3))
+  Downloading psycopg2-binary-2.9.9.tar.gz (384 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 385.0/385.0 kB 12.1 MB/s eta 0:00:00[2025-07-24 18:51:37.941259] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [34 lines of output]
+      /tmp/pip-build-env-2nfhh1ai/overlay/lib/python3.13/site-packages/setuptools/dist.py:759: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+      !!
+      
+              ********************************************************************************
+              Please consider removing the following classifiers in favor of a SPDX license expression:
+      
+              License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+      
+              See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+              ********************************************************************************
+      
+      !!
+        self._finalize_license_expression()
+      running egg_info
+      writing psycopg2_binary.egg-info/PKG-INFO
+      writing dependency_links to psycopg2_binary.egg-info/dependency_links.txt
+      writing top-level names to psycopg2_binary.egg-info/top_level.txt
+      
+      Error: pg_config executable not found.
+      
+      pg_config is required to build psycopg2 from source.  Please add the directory
+      containing pg_config to the $PATH or specify the full executable path with the
+      option:
+      
+          python setup.py build_ext --pg-config /path/to/pg_config build ...
+      
+      or with the pg_config option in 'setup.cfg'.
+      
+      If you prefer to avoid building psycopg2 from source, please install the PyPI
+      'psycopg2-binary' package instead.
+      
+      For further information please check the 'doc/src/install.rst' file (also at
+      <https://www.psycopg.org/docs/install.html>).
+      
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+× Getting requirements to build wheel did not run successfully.
+│ exit code: 1
+╰─> See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using standard pip install.
+Collecting rich>=10.14.0
+  Downloading rich-14.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=10.14.0)
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.14.0)
+  Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.14.0)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading rich-14.0.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.2/243.2 kB 11.8 MB/s eta 0:00:00[2025-07-24 18:51:43.113578] 
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 110.3 MB/s eta 0:00:00[2025-07-24 18:51:43.130343] 
+Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 60.5 MB/s eta 0:00:00[2025-07-24 18:51:43.165763] 
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: pygments, mdurl, markdown-it-py, rich
+  Attempting uninstall: pygments
+    Found existing installation: Pygments 2.19.2
+    Uninstalling Pygments-2.19.2:
+      Successfully uninstalled Pygments-2.19.2
+  Attempting uninstall: mdurl
+    Found existing installation: mdurl 0.1.2
+    Uninstalling mdurl-0.1.2:
+      Successfully uninstalled mdurl-0.1.2
+  Attempting uninstall: markdown-it-py
+    Found existing installation: markdown-it-py 3.0.0
+    Uninstalling markdown-it-py-3.0.0:
+      Successfully uninstalled markdown-it-py-3.0.0
+  Attempting uninstall: rich
+    Found existing installation: rich 14.0.0
+    Uninstalling rich-14.0.0:
+      Successfully uninstalled rich-14.0.0
+Successfully installed markdown-it-py-3.0.0 mdurl-0.1.2 pygments-2.19.2 rich-14.0.0
+
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[18:51:45] ❗️ installer returned a non-zero exit code
+[18:51:45] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
