@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 import os
+from models.base_model import BaseModel
 
-# Cargar variables de entorno
+# Cargar variables de entorno (útil en local, inofensivo en producción)
 load_dotenv()
 
 # Configuración de la base de datos
@@ -23,8 +23,8 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 # Crear la sesión
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base para los modelos
-Base = declarative_base()
+# Base para los modelos (importada de base_model)
+Base = BaseModel
 
 # Función para obtener la sesión de base de datos
 def get_db():

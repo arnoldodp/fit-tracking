@@ -9,7 +9,7 @@
         "testStrategy": "1. Verificar que todas las dependencias se instalan correctamente\n2. Comprobar la conexión a la base de datos PostgreSQL\n3. Verificar que Alembic está correctamente configurado\n4. Ejecutar la aplicación Streamlit localmente para confirmar que funciona",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -17,7 +17,7 @@
             "description": "Crear y configurar el repositorio Git para el proyecto y establecer un entorno virtual de Python aislado",
             "dependencies": [],
             "details": "1. Crear un nuevo repositorio en GitHub/GitLab\n2. Inicializar Git localmente con `git init`\n3. Configurar .gitignore para Python (incluir venv/, .env, __pycache__/, etc.)\n4. Crear un entorno virtual con `python -m venv venv`\n5. Activar el entorno virtual\n6. Configurar README.md con instrucciones básicas del proyecto\n7. Realizar commit inicial",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -26,7 +26,7 @@
             "description": "Instalar y configurar todas las bibliotecas y paquetes necesarios para el proyecto",
             "dependencies": [],
             "details": "1. Crear requirements.txt con las dependencias especificadas:\n   - streamlit==1.28.0\n   - psycopg2-binary==2.9.9\n   - sqlalchemy==2.0.23\n   - alembic==1.12.1\n   - pandas==2.1.1\n   - plotly==5.18.0\n   - python-dotenv==1.0.0\n2. Instalar dependencias con `pip install -r requirements.txt`\n3. Verificar instalación correcta\n4. Crear setup.py para configuración del paquete (opcional)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -35,7 +35,7 @@
             "description": "Crear la estructura de carpetas y archivos base para el proyecto siguiendo un patrón MVC",
             "dependencies": [],
             "details": "1. Crear la estructura de directorios según lo especificado:\n   ```\n   /app\n     /models\n     /views\n     /controllers\n     /utils\n     /migrations\n     /static\n     /tests\n   ```\n2. Crear archivos __init__.py en cada directorio\n3. Crear archivo main.py en la raíz\n4. Configurar archivos base en cada carpeta (ej: base_model.py, app.py)\n5. Configurar estructura para tests unitarios",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -44,7 +44,7 @@
             "description": "Configurar la conexión a PostgreSQL y establecer las variables de entorno necesarias",
             "dependencies": [],
             "details": "1. Crear archivo .env para variables de entorno con:\n   - DATABASE_URL\n   - SECRET_KEY\n   - DEBUG\n   - Otras configuraciones necesarias\n2. Crear archivo database.py en utils para manejar la conexión\n3. Implementar función de conexión a PostgreSQL usando SQLAlchemy\n4. Crear script para verificar la conexión\n5. Configurar Base de SQLAlchemy para los modelos\n6. Documentar parámetros de conexión",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -53,7 +53,7 @@
             "description": "Configurar Alembic para migraciones de base de datos y documentar el entorno de desarrollo",
             "dependencies": [],
             "details": "1. Inicializar Alembic con `alembic init migrations`\n2. Configurar alembic.ini para usar la URL de la base de datos\n3. Modificar env.py para importar los modelos\n4. Crear migración inicial con `alembic revision --autogenerate -m \"Initial migration\"`\n5. Documentar el proceso de configuración en README.md\n6. Crear guía de instalación para nuevos desarrolladores\n7. Documentar comandos comunes para gestionar el entorno",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -76,7 +76,7 @@
             "description": "Implementar el modelo de usuario en SQLAlchemy con todos los campos necesarios y configurar las migraciones correspondientes.",
             "dependencies": [],
             "details": "1. Definir la clase User con los campos requeridos (username, email, password_hash, etc.)\n2. Configurar relaciones con otras tablas (si aplica)\n3. Implementar métodos para validación de datos\n4. Crear migración inicial con Alembic\n5. Implementar métodos para CRUD de usuarios",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -85,7 +85,7 @@
             "description": "Desarrollar funciones seguras para el hash y verificación de contraseñas utilizando bibliotecas criptográficas.",
             "dependencies": [],
             "details": "1. Investigar y seleccionar una biblioteca segura para hash (bcrypt, Argon2, etc.)\n2. Implementar función para generar hash de contraseñas\n3. Implementar función para verificar contraseñas\n4. Crear pruebas unitarias para ambas funciones\n5. Integrar las funciones con el modelo de usuario",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -94,7 +94,7 @@
             "description": "Crear la interfaz de usuario para el registro de nuevos usuarios con validaciones y feedback apropiado.",
             "dependencies": [],
             "details": "1. Diseñar formulario de registro con Streamlit\n2. Implementar validaciones de campos (email, contraseña segura, etc.)\n3. Integrar con las funciones de hash de contraseñas\n4. Mostrar mensajes de error apropiados\n5. Implementar redirección tras registro exitoso",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -103,7 +103,7 @@
             "description": "Crear la interfaz de usuario para el inicio de sesión con validación de credenciales y manejo de errores.",
             "dependencies": [],
             "details": "1. Diseñar formulario de inicio de sesión con Streamlit\n2. Implementar verificación de credenciales\n3. Integrar con las funciones de verificación de contraseñas\n4. Mostrar mensajes de error apropiados\n5. Implementar redirección tras inicio de sesión exitoso",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -112,7 +112,7 @@
             "description": "Desarrollar un sistema para gestionar sesiones de usuario en Streamlit, permitiendo mantener el estado de autenticación.",
             "dependencies": [],
             "details": "1. Investigar opciones para manejo de sesiones en Streamlit\n2. Implementar funciones para crear y validar tokens de sesión\n3. Desarrollar mecanismo para almacenar información de sesión\n4. Crear funciones para verificar si un usuario está autenticado\n5. Implementar cierre de sesión seguro",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -121,7 +121,7 @@
             "description": "Crear la interfaz de usuario para que los usuarios puedan editar su información de perfil.",
             "dependencies": [],
             "details": "1. Diseñar formulario de edición de perfil con Streamlit\n2. Cargar datos actuales del usuario en el formulario\n3. Implementar validaciones de campos\n4. Desarrollar lógica para actualizar información en la base de datos\n5. Mostrar confirmación de cambios realizados",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -145,7 +145,7 @@
             "description": "Diseñar e implementar los modelos SQLAlchemy necesarios para el módulo de entrenamiento, incluyendo Exercise, Workout, WorkoutExercise, y WorkoutSession.",
             "dependencies": [],
             "details": "Implementar los siguientes modelos:\n1. Exercise (ejercicios): id, name, description, muscle_group, equipment, difficulty, instructions, image_url\n2. Workout (plantillas de entrenamiento): id, user_id, name, description, is_template\n3. WorkoutExercise (ejercicios en un entrenamiento): id, workout_id, exercise_id, sets, reps, rest_time, order\n4. WorkoutSession (sesión de entrenamiento realizada): id, workout_id, user_id, date, duration, notes\n5. ExerciseSet (series realizadas): id, workout_session_id, exercise_id, set_number, reps, weight, rpe",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -154,7 +154,7 @@
             "description": "Crear y ejecutar las migraciones de Alembic para generar las tablas necesarias en la base de datos PostgreSQL.",
             "dependencies": [],
             "details": "1. Generar el script de migración con Alembic para crear las tablas: exercises, workouts, workout_exercises, workout_sessions, y exercise_sets\n2. Incluir índices apropiados para optimizar consultas frecuentes\n3. Establecer restricciones de clave foránea para mantener la integridad referencial\n4. Ejecutar la migración y verificar que las tablas se crean correctamente\n5. Crear script de rollback en caso de problemas",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -163,7 +163,7 @@
             "description": "Crear un script para poblar la base de datos con un conjunto inicial de ejercicios predefinidos organizados por grupos musculares.",
             "dependencies": [],
             "details": "1. Crear un archivo JSON o CSV con datos de ejercicios comunes (mínimo 50 ejercicios)\n2. Incluir información detallada: nombre, descripción, grupo muscular, equipamiento necesario, nivel de dificultad e instrucciones\n3. Desarrollar un script Python que lea este archivo y lo inserte en la base de datos\n4. Agregar URLs de imágenes ilustrativas para cada ejercicio\n5. Organizar los ejercicios por categorías: fuerza, cardio, flexibilidad, etc.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -172,7 +172,7 @@
             "description": "Implementar la interfaz de usuario en Streamlit para visualizar, filtrar y buscar ejercicios en la biblioteca.",
             "dependencies": [],
             "details": "1. Crear una página principal de biblioteca de ejercicios\n2. Implementar filtros por grupo muscular, equipamiento y dificultad\n3. Añadir función de búsqueda por nombre o palabra clave\n4. Mostrar detalles de cada ejercicio con imágenes y descripciones\n5. Permitir la visualización de ejercicios en formato de lista o tarjetas\n6. Implementar paginación para navegar por grandes conjuntos de ejercicios",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -181,7 +181,7 @@
             "description": "Desarrollar la interfaz y lógica para que los usuarios puedan crear y editar sus propios entrenamientos personalizados.",
             "dependencies": [],
             "details": "1. Crear formulario para añadir un nuevo entrenamiento (nombre, descripción)\n2. Implementar funcionalidad para añadir ejercicios al entrenamiento desde la biblioteca\n3. Permitir especificar series, repeticiones y tiempo de descanso para cada ejercicio\n4. Implementar función de reordenamiento de ejercicios mediante drag-and-drop\n5. Añadir opción para guardar entrenamientos como plantillas\n6. Desarrollar vista de edición para modificar entrenamientos existentes",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -190,7 +190,7 @@
             "description": "Implementar la funcionalidad para que los usuarios registren sus sesiones de entrenamiento completadas, incluyendo series, repeticiones y pesos.",
             "dependencies": [],
             "details": "1. Crear interfaz para iniciar una nueva sesión basada en un entrenamiento existente\n2. Desarrollar formulario dinámico para registrar series, repeticiones y pesos para cada ejercicio\n3. Implementar cronómetro/temporizador para controlar tiempos de descanso\n4. Añadir campo para notas y valoración de la sesión\n5. Permitir marcar ejercicios como completados durante la sesión\n6. Implementar guardado automático para evitar pérdida de datos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -199,7 +199,7 @@
             "description": "Desarrollar visualizaciones gráficas que muestren el progreso del usuario en diferentes ejercicios y entrenamientos a lo largo del tiempo.",
             "dependencies": [],
             "details": "1. Crear gráficos de línea para mostrar la progresión de peso/repeticiones por ejercicio\n2. Implementar gráficos de barras para comparar volumen total por grupo muscular\n3. Desarrollar visualización de frecuencia de entrenamiento (calendario de calor)\n4. Añadir gráficos de distribución de tiempo dedicado a diferentes grupos musculares\n5. Implementar filtros por período de tiempo (semana, mes, año)\n6. Permitir exportar datos y gráficos en formato PNG o CSV",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -223,7 +223,7 @@
             "description": "Implementar el modelo BodyMetric en SQLAlchemy con todos los campos necesarios para almacenar peso, altura y fecha de registro.",
             "dependencies": [],
             "details": "Desarrollar el modelo BodyMetric con los siguientes campos:\n- id (clave primaria)\n- user_id (clave foránea a users)\n- date (fecha de registro)\n- weight (peso en kg)\n- height (altura en cm)\n\nImplementar también métodos para:\n- Calcular el IMC (peso/altura²)\n- Categorizar el IMC según rangos estándar (bajo peso, normal, sobrepeso, etc.)\n- Validar datos de entrada",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -234,7 +234,7 @@
               "4.1"
             ],
             "details": "Tareas específicas:\n- Generar el script de migración con Alembic\n- Implementar la creación de la tabla body_metrics\n- Configurar las restricciones de clave foránea con la tabla users\n- Establecer índices apropiados para optimizar consultas por usuario y fecha\n- Documentar el proceso de migración\n- Crear script de reversión (downgrade)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -246,7 +246,7 @@
               "4.2"
             ],
             "details": "Funcionalidades a implementar:\n- Formulario para ingresar peso y altura\n- Selector de fecha (con valor predeterminado en fecha actual)\n- Validación de datos en tiempo real\n- Opción para seleccionar unidades (kg/lb para peso, cm/ft para altura)\n- Botón para guardar los datos\n- Confirmación visual del registro exitoso\n- Opción para editar/eliminar registros anteriores",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -258,7 +258,7 @@
               "4.3"
             ],
             "details": "Implementar:\n- Función de cálculo de IMC (peso[kg] / (altura[m])²)\n- Categorización según rangos estándar de la OMS:\n  * < 18.5: Bajo peso\n  * 18.5-24.9: Normal\n  * 25.0-29.9: Sobrepeso\n  * 30.0-34.9: Obesidad grado I\n  * 35.0-39.9: Obesidad grado II\n  * ≥ 40.0: Obesidad grado III\n- Visualización del IMC actual con indicador visual (gauge)\n- Mostrar recomendaciones básicas según la categoría\n- Permitir cambio de unidades para visualización",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -271,7 +271,7 @@
               "4.4"
             ],
             "details": "Crear los siguientes gráficos usando Plotly:\n- Gráfico de línea para evolución del peso en el tiempo\n- Gráfico de línea para evolución del IMC en el tiempo\n- Opción para seleccionar rango de fechas a visualizar\n- Marcadores para destacar valores máximos y mínimos\n- Líneas de referencia para rangos de IMC saludable\n- Funcionalidad para exportar datos en formato CSV\n- Opciones para personalizar la visualización (colores, escala, etc.)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -295,7 +295,7 @@
             "description": "Desarrollar los modelos SQLAlchemy para alimentos, comidas, registros de comidas y relaciones entre ellos",
             "dependencies": [],
             "details": "Implementar los siguientes modelos:\n- Food: información nutricional de alimentos\n- Meal: estructura de comidas (desayuno, almuerzo, etc.)\n- MealEntry: registro de comidas específicas\n- FoodPortion: relación entre alimentos y comidas con cantidades\n\nAsegurar que los modelos capturen toda la información nutricional necesaria: calorías, proteínas, carbohidratos, grasas, fibra, etc.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -304,7 +304,7 @@
             "description": "Crear y ejecutar las migraciones de Alembic para las tablas del módulo de nutrición",
             "dependencies": [],
             "details": "1. Generar script de migración con Alembic\n2. Revisar el script generado para asegurar la correcta estructura\n3. Ejecutar la migración\n4. Verificar que las tablas se crearon correctamente en la base de datos\n5. Crear script de rollback en caso de problemas",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -313,7 +313,7 @@
             "description": "Importar y estructurar una base de datos inicial de alimentos con información nutricional completa",
             "dependencies": [],
             "details": "1. Investigar y obtener fuentes de datos nutricionales (USDA, bases de datos abiertas)\n2. Crear script de importación para procesar los datos\n3. Normalizar unidades y valores nutricionales\n4. Importar al menos 1000 alimentos comunes con información nutricional completa\n5. Categorizar los alimentos para facilitar la búsqueda",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -322,7 +322,7 @@
             "description": "Implementar la interfaz y funcionalidad de búsqueda de alimentos en la base de datos",
             "dependencies": [],
             "details": "1. Crear componente de búsqueda con filtros (nombre, categoría, valores nutricionales)\n2. Implementar búsqueda en tiempo real con Streamlit\n3. Mostrar resultados con información nutricional relevante\n4. Permitir selección de alimentos para añadir a comidas\n5. Optimizar consultas para rendimiento con grandes volúmenes de datos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -331,7 +331,7 @@
             "description": "Desarrollar la interfaz y lógica para que los usuarios registren sus comidas diarias",
             "dependencies": [],
             "details": "1. Crear formulario para selección de fecha y tipo de comida\n2. Implementar interfaz para añadir alimentos a una comida con cantidades\n3. Calcular automáticamente valores nutricionales basados en porciones\n4. Permitir edición y eliminación de entradas\n5. Implementar guardado automático de datos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -340,7 +340,7 @@
             "description": "Implementar el cálculo y visualización de macronutrientes diarios y por comida",
             "dependencies": [],
             "details": "1. Desarrollar algoritmos para calcular totales diarios de calorías, proteínas, carbohidratos y grasas\n2. Crear visualización de distribución de macronutrientes (porcentajes)\n3. Implementar comparación con objetivos personalizados\n4. Mostrar desglose por comida\n5. Calcular y mostrar déficit/superávit calórico",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -349,7 +349,7 @@
             "description": "Implementar gráficos y visualizaciones para el seguimiento nutricional a lo largo del tiempo",
             "dependencies": [],
             "details": "1. Crear gráficos de línea para seguimiento de calorías y macronutrientes a lo largo del tiempo\n2. Implementar gráficos de barras para comparación entre días\n3. Desarrollar gráficos de distribución de macronutrientes (gráficos circulares)\n4. Añadir visualización de tendencias y promedios\n5. Implementar filtros temporales (semana, mes, personalizado)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -806,7 +806,7 @@
     ],
     "metadata": {
       "created": "2025-07-23T16:42:33.720Z",
-      "updated": "2025-07-23T22:02:40.886Z",
+      "updated": "2025-07-24T00:30:57.521Z",
       "description": "Tasks for master context"
     }
   }

@@ -32,3 +32,6 @@ venv/
 
 # pycache
 __pycache__/
+
+# Streamlit secrets
+.streamlit/secrets.toml

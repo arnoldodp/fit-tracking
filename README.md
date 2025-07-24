@@ -13,7 +13,7 @@ Aplicación web para el seguimiento integral de entrenamiento físico, nutrició
 1. Clonar el repositorio:
 ```bash
 git clone <url-del-repositorio>
-cd <nombre-del-directorio>
+cd <nombre-del-directorio>Si
 ```
 
 2. Crear un entorno virtual:
@@ -63,12 +63,25 @@ streamlit run app.py
 │   ├── metrics.py        # Módulo de métricas corporales
 │   ├── nutrition.py      # Módulo de nutrición
 │   ├── database/         # Configuración de base de datos
-│   └── models/           # Modelos SQLAlchemy
-├── tests/                # Tests unitarios y de integración
+│   ├── models/           # Modelos SQLAlchemy
+│   │   └── base_model.py # Clase base para modelos
+│   ├── views/            # Vistas de la aplicación (Streamlit u otros)
+│   ├── controllers/      # Lógica de controladores (gestión de flujo y lógica de negocio)
+│   ├── utils/            # Funciones utilitarias y helpers
+│   ├── static/           # Archivos estáticos (imágenes, CSS, JS)
+│   └── tests/            # Tests unitarios y de integración
 ├── .env.example          # Ejemplo de variables de entorno
 ├── requirements.txt      # Dependencias del proyecto
 └── README.md             # Este archivo
 ```
+
+### Descripción de carpetas nuevas:
+- **views/**: Contendrá las vistas de la aplicación, como páginas o componentes visuales.
+- **controllers/**: Lógica de controladores, separación de la lógica de negocio y flujo de la app.
+- **utils/**: Funciones utilitarias, helpers y código reutilizable.
+- **static/**: Archivos estáticos como imágenes, hojas de estilo o scripts JS.
+- **tests/**: Pruebas unitarias y de integración.
+- **models/base_model.py**: Clase base para los modelos SQLAlchemy, útil para herencia y consistencia.
 
 ## Características Implementadas
 - [x] Configuración del entorno de desarrollo
@@ -150,3 +163,55 @@ flowchart TD
 9. **Ver evolución de peso:**  El usuario visualiza la evolución de su peso en el tiempo mediante gráficos.
 10. **Editar/eliminar registros:**  El usuario puede modificar o eliminar entrenamientos, comidas o métricas.
 11. **Cerrar sesión:**  El usuario sale de la aplicación y debe volver a autenticarse para acceder. 
+
+## Solución de Problemas
+
+### Error: FileNotFoundError: No such file or directory: 'alembic\\script.py.mako'
+
+Si al ejecutar una migración con Alembic ves este error:
+
+```
+FileNotFoundError: [Errno 2] No such file or directory: 'alembic\\script.py.mako'
+```
+
+Esto significa que falta el archivo de plantilla de migración en la carpeta alembic/. Para restaurarlo:
+
+1. Crea una carpeta temporal y genera la estructura de Alembic en ella:
+   ```bash
+   mkdir alembic_tmp
+   alembic init alembic_tmp
+   ```
+2. Copia el archivo de plantilla a tu carpeta alembic original:
+   ```bash
+   copy alembic_tmp\script.py.mako alembic\
+   ```
+3. Elimina la carpeta temporal:
+   ```bash
+   rmdir /s /q alembic_tmp
+   ```
+4. Vuelve a intentar la migración:
+   ```bash
+   alembic revision --autogenerate -m "Initial users table"
+   ```
+
+Con esto, Alembic debería funcionar correctamente. 
+
+## Buenas Prácticas de Seguridad y Producción
+
+- Todas las contraseñas se almacenan con hash seguro (bcrypt).
+- Las sesiones expiran automáticamente tras 5 minutos de inactividad.
+- Todas las entradas de usuario son validadas en formularios.
+- Se recomienda ejecutar la app detrás de HTTPS en producción.
+- Configura variables de entorno seguras y nunca subas tu archivo .env real al repositorio.
+- Realiza backups periódicos de la base de datos PostgreSQL.
+- Usa herramientas de monitoreo y logging (ejemplo: Sentry, Prometheus, Grafana).
+- Cumple con normativas de privacidad (GDPR/LGPD): permite a los usuarios exportar/eliminar sus datos si es necesario.
+- Para pruebas de carga y seguridad, utiliza herramientas como Locust, OWASP ZAP, etc.
+- Consulta la documentación de cada módulo en este README y en los comentarios del código. 
+
+## Despliegue en Streamlit Cloud y Supabase
+
+- Sube tu código a GitHub.
+- Crea un archivo `.streamlit/secrets.toml` con las credenciales de tu base de datos Supabase.
+- Entra a https://streamlit.io/cloud, conecta tu repo y selecciona `src/app.py` como entrypoint.
+- ¡Listo! Tu app usará Supabase como base de datos y será accesible desde cualquier lugar. 

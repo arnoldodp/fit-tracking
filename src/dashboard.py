@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 from database.database import SessionLocal
 from models.bodymetric import BodyMetric
 from models.meallog import MealLog
@@ -7,7 +7,21 @@ from models.food import Food
 from models.workout import Workout
 import pandas as pd
 
+def check_session():
+    if "user_id" not in st.session_state or st.session_state.user_id is None:
+        st.error("Sesión no válida. Por favor, inicia sesión nuevamente.")
+        st.stop()
+    # Expiración por inactividad (5 minutos)
+    now = datetime.now()
+    if "last_active" in st.session_state:
+        if (now - st.session_state.last_active) > timedelta(minutes=5):
+            st.session_state.clear()
+            st.error("Sesión expirada por inactividad. Por favor, inicia sesión nuevamente.")
+            st.stop()
+    st.session_state.last_active = now
+
 def dashboard_page():
+    check_session()
     st.title("Dashboard")
     st.markdown("Bienvenido a tu panel de control. Aquí puedes ver tu progreso y KPIs principales.")
     db = SessionLocal()

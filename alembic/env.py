@@ -7,11 +7,17 @@ import sys
 from dotenv import load_dotenv
 
 # Agregar el directorio src al path para poder importar los modelos
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Importar los modelos para que Alembic los detecte
-from src.models.user import User
-from src.database.database import Base, SQLALCHEMY_DATABASE_URL
+from models.user import User
+from models.bodymetric import BodyMetric
+from models.exercise import Exercise
+from models.workout import Workout, WorkoutExercise
+from models.food import Food
+from models.meallog import MealLog
+from models.goal import Goal
+from database.database import Base, SQLALCHEMY_DATABASE_URL
 
 # Cargar variables de entorno
 load_dotenv()

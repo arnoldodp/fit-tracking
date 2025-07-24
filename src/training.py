@@ -1,11 +1,25 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 from database.database import SessionLocal
 from models.exercise import Exercise, MuscleGroup
 from models.workout import Workout, WorkoutExercise
 import pandas as pd
 
+def check_session():
+    if "user_id" not in st.session_state or st.session_state.user_id is None:
+        st.error("Sesión no válida. Por favor, inicia sesión nuevamente.")
+        st.stop()
+    # Expiración por inactividad (5 minutos)
+    now = datetime.now()
+    if "last_active" in st.session_state:
+        if (now - st.session_state.last_active) > timedelta(minutes=5):
+            st.session_state.clear()
+            st.error("Sesión expirada por inactividad. Por favor, inicia sesión nuevamente.")
+            st.stop()
+    st.session_state.last_active = now
+
 def training_page():
+    check_session()
     st.title("Registro de Entrenamiento")
     
     tab1, tab2, tab3 = st.tabs(["Registrar Entrenamiento", "Historial", "Ejercicios"])
@@ -16,6 +30,46 @@ def training_page():
         show_workout_history()
     with tab3:
         manage_exercises()
+    
+    # Gráficos de progreso visual
+    st.header("Progreso de Entrenamiento")
+    db = SessionLocal()
+    user_id = st.session_state.user_id
+    # Obtener todos los ejercicios realizados por el usuario
+    query = db.query(Workout, WorkoutExercise, Exercise).\
+        join(WorkoutExercise, Workout.id == WorkoutExercise.workout_id).\
+        join(Exercise, WorkoutExercise.exercise_id == Exercise.id).\
+        filter(Workout.user_id == user_id).\
+        order_by(Workout.date)
+    data = []
+    for w, we, ex in query:
+        data.append({
+            "Fecha": w.date.strftime('%Y-%m-%d'),
+            "Ejercicio": ex.name,
+            "Peso": we.weight or 0,
+            "Repeticiones": we.reps or 0,
+            "Series": we.sets or 0,
+            "Volumen": (we.weight or 0) * (we.reps or 0) * (we.sets or 0)
+        })
+    db.close()
+    import pandas as pd
+    if data:
+        df = pd.DataFrame(data)
+        st.subheader("Evolución de Volumen Total por Ejercicio")
+        ejercicios = df["Ejercicio"].unique()
+        for ejercicio in ejercicios:
+            df_ej = df[df["Ejercicio"] == ejercicio]
+            resumen = df_ej.groupby("Fecha")["Volumen"].sum().reset_index()
+            st.line_chart(resumen.set_index("Fecha"), use_container_width=True)
+            st.caption(f"{ejercicio}: Volumen = Peso x Reps x Series")
+        st.subheader("Evolución de Peso Máximo por Ejercicio")
+        for ejercicio in ejercicios:
+            df_ej = df[df["Ejercicio"] == ejercicio]
+            resumen = df_ej.groupby("Fecha")["Peso"].max().reset_index()
+            st.line_chart(resumen.set_index("Fecha"), use_container_width=True)
+            st.caption(f"{ejercicio}: Peso máximo levantado por sesión")
+    else:
+        st.info("Aún no hay datos suficientes para mostrar gráficos de progreso.")
 
 def register_workout():
     st.header("Registrar Nuevo Entrenamiento")

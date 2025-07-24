@@ -52,7 +52,7 @@ st.title("Sistema de Seguimiento de Entrenamiento y Nutrición")
 st.sidebar.title("Navegación")
 page = st.sidebar.radio(
     "Ir a",
-    ["Dashboard", "Entrenamiento", "Nutrición", "Métricas Corporales", "Metas", "Configuración"]
+    ["Dashboard", "Entrenamiento", "Nutrición", "Métricas Corporales", "Metas", "Perfil", "Configuración"]
 )
 
 # Botón de cerrar sesión
@@ -75,6 +75,14 @@ elif page == "Métricas Corporales":
     
 elif page == "Metas":
     goals_page()
+    
+elif page == "Perfil":
+    from profile import profile_page
+    profile_page()
+    
+elif page == "Recuperar Contraseña":
+    from login import recover_password_page
+    recover_password_page()
     
 elif page == "Configuración":
     st.header("Configuración")

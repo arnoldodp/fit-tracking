@@ -1,11 +1,25 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 from database.database import SessionLocal
 from models.food import Food
 from models.meallog import MealLog
 import pandas as pd
 
+def check_session():
+    if "user_id" not in st.session_state or st.session_state.user_id is None:
+        st.error("Sesión no válida. Por favor, inicia sesión nuevamente.")
+        st.stop()
+    # Expiración por inactividad (5 minutos)
+    now = datetime.now()
+    if "last_active" in st.session_state:
+        if (now - st.session_state.last_active) > timedelta(minutes=5):
+            st.session_state.clear()
+            st.error("Sesión expirada por inactividad. Por favor, inicia sesión nuevamente.")
+            st.stop()
+    st.session_state.last_active = now
+
 def nutrition_page():
+    check_session()
     st.title("Registro de Nutrición")
     
     tab1, tab2, tab3 = st.tabs(["Registrar Comida", "Historial", "Alimentos"])
@@ -84,63 +98,22 @@ def show_meal_history():
         if not meals:
             st.info("No hay comidas registradas para los filtros seleccionados.")
             return
-        for meal in meals:
-            food = foods.get(meal.food_id)
-            if food:
-                cal = round(food.calories * meal.quantity / 100, 2)
-                col1, col2 = st.columns([4, 1])
-                with col1:
-                    st.write(f"{meal.date.strftime('%Y-%m-%d')} | {food.name} | {meal.quantity}g | {cal} kcal")
-                with col2:
-                    if st.button(f"Editar", key=f"edit_meal_{meal.id}"):
-                        st.session_state.edit_meal_id = meal.id
-                    if st.button(f"Eliminar", key=f"delete_meal_{meal.id}"):
-                        try:
-                            db.delete(meal)
-                            db.commit()
-                            st.success("Comida eliminada exitosamente!")
-                        except Exception as e:
-                            db.rollback()
-                            st.error(f"Error al eliminar la comida: {str(e)}")
-        # Formulario de edición
-        if st.session_state.edit_meal_id:
-            meal = db.query(MealLog).filter(MealLog.id == st.session_state.edit_meal_id).first()
-            if meal:
-                with st.form("edit_meal_form"):
-                    date = st.date_input("Fecha", value=meal.date)
-                    food_id = st.selectbox(
-                        "Alimento",
-                        options=[f.id for f in foods.values()],
-                        format_func=lambda x: foods[x].name,
-                        index=list(foods.keys()).index(meal.food_id)
-                    )
-                    quantity = st.number_input("Cantidad (gramos)", min_value=1.0, value=meal.quantity, step=1.0)
-                    submit = st.form_submit_button("Actualizar Comida")
-                    cancel = st.form_submit_button("Cancelar")
-                    if submit:
-                        try:
-                            meal.date = date
-                            meal.food_id = food_id
-                            meal.quantity = quantity
-                            db.commit()
-                            st.success("Comida actualizada exitosamente!")
-                            st.session_state.edit_meal_id = None
-                        except Exception as e:
-                            db.rollback()
-                            st.error(f"Error al actualizar la comida: {str(e)}")
-                    if cancel:
-                        st.session_state.edit_meal_id = None
-        # Tabla y gráfico
         data = []
         for meal in meals:
             food = foods.get(meal.food_id)
             if food:
                 cal = round(food.calories * meal.quantity / 100, 2)
+                prot = round((food.protein or 0) * meal.quantity / 100, 2)
+                carb = round((food.carbs or 0) * meal.quantity / 100, 2)
+                fat = round((food.fat or 0) * meal.quantity / 100, 2)
                 data.append({
                     "Fecha": meal.date.strftime('%Y-%m-%d'),
                     "Alimento": food.name,
                     "Cantidad (g)": meal.quantity,
-                    "Calorías": cal
+                    "Calorías": cal,
+                    "Proteína": prot,
+                    "Carbohidratos": carb,
+                    "Grasas": fat
                 })
         df = pd.DataFrame(data)
         st.dataframe(df)
@@ -148,6 +121,22 @@ def show_meal_history():
         if not df.empty:
             resumen = df.groupby("Fecha")["Calorías"].sum().reset_index()
             st.bar_chart(resumen.set_index("Fecha"))
+            # Gráficos de macronutrientes
+            st.subheader("Distribución de Macronutrientes por Día")
+            macro = df.groupby("Fecha")[["Proteína", "Carbohidratos", "Grasas"]].sum()
+            st.bar_chart(macro)
+            st.subheader("Distribución porcentual de macronutrientes (último día registrado)")
+            last_day = df["Fecha"].max()
+            macro_last = df[df["Fecha"] == last_day][["Proteína", "Carbohidratos", "Grasas"]].sum()
+            st.write(f"Fecha: {last_day}")
+            st.plotly_chart(
+                __import__('plotly.express').pie(
+                    names=["Proteína", "Carbohidratos", "Grasas"],
+                    values=macro_last.values,
+                    title="Distribución porcentual de macronutrientes"
+                ),
+                use_container_width=True
+            )
     finally:
         db.close()
 

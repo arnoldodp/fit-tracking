@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, Enum
-from src.database.database import Base
+from database.database import Base
 import enum
 
 class MuscleGroup(enum.Enum):

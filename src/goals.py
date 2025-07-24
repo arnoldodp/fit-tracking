@@ -1,10 +1,24 @@
 import streamlit as st
-from datetime import date
-from src.database.database import SessionLocal
-from src.models.goal import Goal
+from datetime import date, datetime, timedelta
+from database.database import SessionLocal
+from models.goal import Goal
 import pandas as pd
 
+def check_session():
+    if "user_id" not in st.session_state or st.session_state.user_id is None:
+        st.error("Sesión no válida. Por favor, inicia sesión nuevamente.")
+        st.stop()
+    # Expiración por inactividad (5 minutos)
+    now = datetime.now()
+    if "last_active" in st.session_state:
+        if (now - st.session_state.last_active) > timedelta(minutes=5):
+            st.session_state.clear()
+            st.error("Sesión expirada por inactividad. Por favor, inicia sesión nuevamente.")
+            st.stop()
+    st.session_state.last_active = now
+
 def goals_page():
+    check_session()
     st.title("Metas y Objetivos")
     db = SessionLocal()
     user_id = st.session_state.user_id
@@ -72,6 +86,31 @@ def goals_page():
                 st.write(f"**{g.title}** | {g.category} | Objetivo: {g.target_value} {g.target_unit} para {g.target_date}")
                 if g.description:
                     st.caption(g.description)
+                # Visualización de progreso
+                progreso = None
+                if g.category == "weight":
+                    from models.bodymetric import BodyMetric
+                    last_metric = db.query(BodyMetric).filter(BodyMetric.user_id == user_id).order_by(BodyMetric.date.desc()).first()
+                    if last_metric:
+                        actual = last_metric.weight
+                        progreso = min(100, round(100 * actual / g.target_value, 2)) if g.target_value else 0
+                        st.progress(progreso / 100, text=f"{actual} kg de {g.target_value} kg ({progreso}%)")
+                elif g.category == "nutrition":
+                    from models.meallog import MealLog
+                    from models.food import Food
+                    today = date.today()
+                    meals = db.query(MealLog).filter(MealLog.user_id == user_id, MealLog.date >= today).all()
+                    foods = {f.id: f for f in db.query(Food).all()}
+                    total_cal = sum([foods[m.food_id].calories * m.quantity / 100 for m in meals if m.food_id in foods])
+                    progreso = min(100, round(100 * total_cal / g.target_value, 2)) if g.target_value else 0
+                    st.progress(progreso / 100, text=f"{round(total_cal,2)} kcal de {g.target_value} kcal ({progreso}%)")
+                elif g.category == "exercise":
+                    from models.workout import Workout
+                    today = date.today()
+                    workouts = db.query(Workout).filter(Workout.user_id == user_id, Workout.date >= today).all()
+                    total = len(workouts)
+                    progreso = min(100, round(100 * total / g.target_value, 2)) if g.target_value else 0
+                    st.progress(progreso / 100, text=f"{total} sesiones de {g.target_value} ({progreso}%)")
             with col2:
                 if st.button(f"Editar", key=f"edit_goal_{g.id}"):
                     st.session_state.edit_goal_id = g.id
