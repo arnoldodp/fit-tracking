@@ -4,6 +4,7 @@ from database.database import SessionLocal
 from models.food import Food
 from models.meallog import MealLog
 import pandas as pd
+import plotly.express as px
 
 def check_session():
     if "user_id" not in st.session_state or st.session_state.user_id is None:
@@ -130,7 +131,7 @@ def show_meal_history():
             macro_last = df[df["Fecha"] == last_day][["Proteína", "Carbohidratos", "Grasas"]].sum()
             st.write(f"Fecha: {last_day}")
             st.plotly_chart(
-                __import__('plotly.express').pie(
+                px.pie(
                     names=["Proteína", "Carbohidratos", "Grasas"],
                     values=macro_last.values,
                     title="Distribución porcentual de macronutrientes"
