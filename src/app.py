@@ -58,7 +58,7 @@ page = st.sidebar.radio(
 # Botón de cerrar sesión
 if st.sidebar.button("Cerrar Sesión"):
     st.session_state.clear()
-    st.experimental_rerun()
+    st.rerun()
 
 # Contenido principal basado en la página seleccionada
 if page == "Dashboard":
