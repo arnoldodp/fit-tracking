@@ -21,18 +21,18 @@ def login_page():
             elif authenticate_user(username, password):
                 st.success("¡Inicio de sesión exitoso!")
                 st.session_state.user_id = get_user_id(username)
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Usuario o contraseña incorrectos. Intenta de nuevo.")
     # Enlace para registro y recuperación
     st.info("¿No tienes una cuenta?")
     if st.button("Registrarse"):
         st.session_state.page = "register"
-        st.experimental_rerun()
+        st.rerun()
     st.info("¿Olvidaste tu contraseña?")
     if st.button("Recuperar contraseña"):
         st.session_state.page = "recover_password"
-        st.experimental_rerun()
+        st.rerun()
 
 def authenticate_user(username: str, password: str) -> bool:
     db = SessionLocal()
@@ -81,7 +81,7 @@ def recover_password_page():
                                 db.commit()
                                 st.success("Contraseña restablecida correctamente. Ahora puedes iniciar sesión.")
                                 st.session_state.page = "login"
-                                st.experimental_rerun()
+                                st.rerun()
                 else:
                     st.error("No se encontró un usuario con ese correo electrónico.")
                 db.close()
