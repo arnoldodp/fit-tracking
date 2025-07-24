@@ -41,7 +41,7 @@ __pycache__/
 .taskmaster/
 
 # Claude
-claude/
+.claude/
 .claude.md
 
 # MCP
